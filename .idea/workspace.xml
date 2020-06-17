@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e71132d-d025-4b90-8052-c89f8759bb38" name="Default Changelist" comment="" />
+    <list default="true" id="0e71132d-d025-4b90-8052-c89f8759bb38" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ada_hub/lib/helpers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ada_hub/lib/helpers/pid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ada_hub/lib/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/ada_hub/lib/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ada_hub/libada_hub/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ada_hub/lib/gui/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ada_hub/libada_hub/helpers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ada_hub/lib/gui/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ada_hub/libgui/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ada_hub/libgui/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ada_hub/libgui/models/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/ada_hub/lib/gui/models/main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/ada_hub.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/ada_hub.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +45,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1dL2aYRArIRCT5dpUYvfiZVXVhy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -24,17 +58,41 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts/ada_hub.py" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ada_hub/lib/gui" />
+      <recent name="$PROJECT_DIR$/ada_hub/lib/" />
       <recent name="$PROJECT_DIR$/ada_hub/lib" />
       <recent name="$PROJECT_DIR$/lib" />
       <recent name="$PROJECT_DIR$/ada_hub/" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.ada_hub">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ada-hub" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ada_hub/libada_hub/helpers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ada_hub/libada_hub/helpers/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="ada_hub" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="ada-hub" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -43,7 +101,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="/usr/bin/python3.8" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -56,6 +114,15 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.ada_hub" />
+      <item itemvalue="Python.__init__" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.__init__" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -70,31 +137,50 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
-    <state x="836" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592367084837">
+    <state x="836" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592400904769">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="836" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1592367084837" />
-    <state x="1161" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1592342969095">
+    <state x="836" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1592400904769" />
+    <state x="1161" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1592400901126">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="1161" y="311" width="424" height="491" key="FileChooserDialogImpl/72.27.1848.1053@72.27.1848.1053" timestamp="1592342969095" />
-    <state width="585" height="201" key="GridCell.Tab.0.bottom" timestamp="1592368693597">
+    <state x="1161" y="311" width="424" height="491" key="FileChooserDialogImpl/72.27.1848.1053@72.27.1848.1053" timestamp="1592400901126" />
+    <state x="1336" y="453" width="244" height="207" key="Github.ShareDialog" timestamp="1592368932190">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="585" height="201" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1592368693597" />
-    <state width="585" height="201" key="GridCell.Tab.0.center" timestamp="1592368693595">
+    <state x="1336" y="453" width="244" height="207" key="Github.ShareDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1592368932190" />
+    <state x="1294" y="262" width="317" height="589" key="Github.UntrackedFilesDialog" timestamp="1592368958465">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="585" height="201" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1592368693595" />
-    <state width="585" height="201" key="GridCell.Tab.0.left" timestamp="1592368693595">
+    <state x="1294" y="262" width="317" height="589" key="Github.UntrackedFilesDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1592368958465" />
+    <state width="544" height="201" key="GridCell.Tab.0.bottom" timestamp="1592400879321">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="585" height="201" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1592368693595" />
-    <state width="585" height="201" key="GridCell.Tab.0.right" timestamp="1592368693596">
+    <state width="544" height="201" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1592400879321" />
+    <state width="544" height="201" key="GridCell.Tab.0.center" timestamp="1592400879321">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="585" height="201" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1592368693596" />
+    <state width="544" height="201" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1592400879321" />
+    <state width="544" height="201" key="GridCell.Tab.0.left" timestamp="1592400879321">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="544" height="201" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1592400879321" />
+    <state width="544" height="201" key="GridCell.Tab.0.right" timestamp="1592400879321">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="544" height="201" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1592400879321" />
     <state x="943" y="188" width="977" height="737" key="SettingsEditor" timestamp="1592368730094">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>

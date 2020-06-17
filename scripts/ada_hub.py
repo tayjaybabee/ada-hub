@@ -8,9 +8,19 @@ import logging
 from pathlib import Path
 from platform import system as os_family
 
+from ada_hub.lib.constants import PROG, HOME_DIR
+
 NAME = 'AdaHub'
 
 get_logger = logging.getLogger
+
+
+def clean_exit(status):
+    # This
+    log = get_logger(f'{NAME}.clean_exit')
+    if status == 1:
+        log.setLevel(logging.DEBUG)
+        log.debug('Received clean-exit call after a failure. Please check the logs above.')
 
 def start_logger(args):
     global get_logger
@@ -28,23 +38,7 @@ def start_logger(args):
     log = logging.getLogger(f'{NAME}.start_logger')
     log.info('Started logger')
 
-
-def write_pid():
-
-    log = get_logger(f'{NAME}.write_pid')
-
-    if 'linux' in os_family().lower():
-        log.debug('Detected linux system')
-        h_path = Path.home()
-        log.debug(f'Detected {h_path} as home directory')
-        data_dir = str(h_path) + '/Inspyre-Softworks/AdaHub/'
-        log.debug(f'Therefore {data_dir} is where application data should be unless otherwise specified')
-
-
-
-    pid = os.getpid()
-
-
+    return device
 
 
 
@@ -89,8 +83,9 @@ def parse_args():
 
     cli_subparser.add_argument('-l', '--location', type=int, action='store')
 
-    parser.add_argument('-c', '--config-file', action='store', type=argparse.FileType('r'),
-                        help='Provide the filesystem-location for a settings.ini file')
+    parser.add_argument('-D', '--data-dir', action='store', type=argparse.FileType('w'),
+                        help="Provide the filesystem-location of your application's data directory, "
+                             "or the destination you want the program to create a data-directory in.")
 
     return parser.parse_args()
 
@@ -105,8 +100,12 @@ def main():
     """
     args = parse_args()
 
-    start_logger(args)
-    write_pid()
+    log = start_logger(args)
+    try:
+        write_pid(args.data_dir)
+    except PermissionError as e:
+        log.error(e)
+        clean_exit(status=1)
 
 if __name__ == '__main__':
     main()
