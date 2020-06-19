@@ -13,23 +13,6 @@ from ada_hub.lib.constants import PROG as NAME, HOME_DIR, DEFAULT_DATA_ROOT
 
 get_logger = getLogger
 
-
-
-
-
-
-def write_pid(data_dir):
-    pass
-
-
-def prepare_env(data_root=None):
-    if data_root is None:
-        data_root = DEFAULT_DATA_ROOT
-    else:
-        if not data_root.replace(' ', '') == '':
-            data_root = data_root.split(split_char)
-
-
 # def write_pid(data_dir):
 #     log = get_logger(f'{NAME}.write_pid')
 #

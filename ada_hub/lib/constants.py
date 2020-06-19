@@ -11,7 +11,7 @@ from pathlib import Path
 PROG = 'AdaHub'
 PID = getpid()
 
-HOME_DIR = Path.home()
+HOME_DIR = f'{ Path.home() }/'
 
 DEFAULT_DATA_ROOT = str(f'{HOME_DIR}Inspyre-Softworks/{PROG}/')
 
