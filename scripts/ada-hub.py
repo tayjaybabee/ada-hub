@@ -168,11 +168,11 @@ def main():
 
     if os.path.isfile(conf_file_path):
         log.debug(f'Found {conf_file_path}')
-        config = load_config(conf_file_path, args)
+        config = load_config(conf_file_path)
     else:
         log.debug(f'Could not find {conf_file_path}')
         log.debug('Calling config file creator')
-        create_config_file('/home/dave/settings.ini')
+        create_config_file(str(f'{data_dir}conf/settings.ini'))
 
     connected = test_connection()
 
@@ -182,7 +182,7 @@ def main():
         except ConnectivityError as e:
             log.error(e.message)
 
-    pid_dir = str(f'{data_dir}run')
+    pid_dir = str(f'{data_dir}run/')
     log.debug(f'Determined PID directory to be: {pid_dir}')
     write_pid(pid_dir)
 

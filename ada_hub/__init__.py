@@ -1,7 +1,12 @@
 from ada_hub.lib.constants import PROG as NAME, DEFAULT_DATA_ROOT
-from ada_hub.lib.helpers.pid import remove_pid
 from logging import getLogger as get_logger
 import logging
+
+
+def delete_pid():
+    from ada_hub.lib.helpers.pid import remove_pid
+
+    remove_pid()
 
 
 def clean_exit(status):
@@ -13,7 +18,6 @@ def clean_exit(status):
     if status == 0:
         log.debug('Exit is expected. No errors.')
 
-    remove_pid()
-
-
+    log.info("User's desire to exit has been noted.")
+    delete_pid()
     exit()

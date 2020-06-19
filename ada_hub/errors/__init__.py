@@ -1,8 +1,20 @@
-class ApplicationError(Exception):
-    def __init__(self, err_type=None, *args, **kwargs):
+from logging import getLogger as get_logger
 
-        if 'err_type' in args[0]:
-            err_type = args[0]['err_type']
+import inspect
+import sys
+
+NAME = 'AdaHub'
+
+m_log = get_logger(NAME)
+m_log.debug('Imported!')
+
+
+class ApplicationError(Exception):
+    def __init__(self, *args, **kwargs):
+
+
+        if 'err_type' in args[1]:
+            err_type = args[1]['err_type']
 
         if err_type is None:
             self.err_type = 'Unknown'
@@ -23,3 +35,13 @@ class ConnectivityError(ApplicationError):
             self.message = "Unable to assess IP Address, this likely indicates that there's no internet connectivity"
         else:
             self.message = message
+
+
+class FileStateDeSyncError(ApplicationError):
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+
+
+m_log.debug(f'Imported {__file__}')
+members = inspect.getmembers(sys.modules[__name__], inspect.isclass)
+m_log.debug(f'This introduces the following classes: {members}')
