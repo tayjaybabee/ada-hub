@@ -15,9 +15,7 @@ get_logger = getLogger
 
 
 
-def home_dir_find():
 
-    return Path.home()
 
 
 def write_pid(data_dir):

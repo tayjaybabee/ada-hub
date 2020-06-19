@@ -12,7 +12,7 @@ setup(
         description='An application that allows one to monitor their environment.',
         entry_points={
                 'console_scripts': [
-                        'ada-hub=ada_hub:main',
+                        'ada_hub=ada_hub:main',
                 ],
         },
         keywords='temperature humidity'

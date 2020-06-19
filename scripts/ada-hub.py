@@ -8,7 +8,9 @@ import logging
 from pathlib import Path
 from platform import system as os_family
 
-from ada_hub.lib.constants import PROG, HOME_DIR
+from ada_hub.lib.constants import HOME_DIR
+from ada_hub.lib.helpers.pid import write_pid
+
 
 NAME = 'AdaHub'
 
@@ -21,6 +23,7 @@ def clean_exit(status):
     if status == 1:
         log.setLevel(logging.DEBUG)
         log.debug('Received clean-exit call after a failure. Please check the logs above.')
+
 
 def start_logger(args):
     global get_logger
@@ -39,7 +42,6 @@ def start_logger(args):
     log.info('Started logger')
 
     return device
-
 
 
 def remove_pid():
@@ -67,7 +69,8 @@ def parse_args():
                                 required=False)
 
     verbosity_args.add_argument('-q', '--quiet', action='store_true',
-                                help='Instruct the logger to suppress all logger messages below WARNING level from being '
+                                help='Instruct the logger to suppress all logger messages below WARNING level from '
+                                     'being '
                                      'output to the console',
                                 required=False)
 
@@ -77,17 +80,24 @@ def parse_args():
                                 required=False)
 
     subparsers = parser.add_subparsers(title='Sub-Commands',
+                                       dest='command',
                                        description='Valid sub-commands for ada-hub')
 
     cli_subparser = subparsers.add_parser('cli', help='Run a quick query using the command line (no GUI)')
 
     cli_subparser.add_argument('-l', '--location', type=int, action='store')
 
+    gui_subparser = subparsers.add_parser('gui', help='Start the program with the full GUI')
+
+    gui_subparser.add_argument('-e', '--emulator', help='Start the Ada Hub application with the Sense-Emu backend.',
+                               default=False)
+
     parser.add_argument('-D', '--data-dir', action='store', type=argparse.FileType('w'),
                         help="Provide the filesystem-location of your application's data directory, "
                              "or the destination you want the program to create a data-directory in.")
 
     return parser.parse_args()
+
 
 def main():
     """
@@ -100,12 +110,23 @@ def main():
     """
     args = parse_args()
 
+    mode = args.command
+
     log = start_logger(args)
+
+    log.debug(f'Starting Ada Hub in mode: {mode.upper()}')
+
     try:
         write_pid(args.data_dir)
     except PermissionError as e:
         log.error(e)
         clean_exit(status=1)
+
+    from ada_hub.lib.gui.models.windows.main_window import start as start_window
+
+    start_window()
+
+
 
 if __name__ == '__main__':
     main()

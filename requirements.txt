@@ -1,0 +1,2 @@
+inspy_logger==1.0.3
+PySimpleGUIQt==0.35.0
