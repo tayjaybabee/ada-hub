@@ -141,3 +141,6 @@ dmypy.json
 cython_debug/
 
 poetry.lock
+!/CREDITS
+!/ada_hub/lib/ada_sense/
+!/ada_hub/lib/credits/

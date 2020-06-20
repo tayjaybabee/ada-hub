@@ -19,13 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e71132d-d025-4b90-8052-c89f8759bb38" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ada_hub/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ada_hub/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ada_hub/errors/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ada_hub/errors/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ada_hub/lib/helpers/pid.py" beforeDir="false" afterPath="$PROJECT_DIR$/ada_hub/lib/helpers/pid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/ada-hub.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/ada-hub.py" afterDir="false" />
-    </list>
+    <list default="true" id="0e71132d-d025-4b90-8052-c89f8759bb38" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -263,7 +257,21 @@
       <option name="project" value="LOCAL" />
       <updated>1592581510520</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add to .gitignore, set up robust backend">
+      <created>1592610641246</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1592610641246</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add to .gitignore, set up robust backend">
+      <created>1592612297600</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1592612297600</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -282,7 +290,8 @@
     <MESSAGE value="more code" />
     <MESSAGE value="We now have a window!" />
     <MESSAGE value="More code" />
-    <option name="LAST_COMMIT_MESSAGE" value="More code" />
+    <MESSAGE value="Add to .gitignore, set up robust backend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add to .gitignore, set up robust backend" />
   </component>
   <component name="WindowStateProjectService">
     <state x="836" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592601734083">
@@ -301,30 +310,30 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="1294" y="262" width="317" height="589" key="Github.UntrackedFilesDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1592368958465" />
-    <state width="1566" height="204" key="GridCell.Tab.0.bottom" timestamp="1592610521438">
+    <state width="1444" height="204" key="GridCell.Tab.0.bottom" timestamp="1592612055976">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1566" height="204" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1592610521438" />
-    <state width="1566" height="204" key="GridCell.Tab.0.center" timestamp="1592610521438">
+    <state width="1444" height="204" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1592612055976" />
+    <state width="1444" height="204" key="GridCell.Tab.0.center" timestamp="1592612055975">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1566" height="204" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1592610521438" />
-    <state width="1566" height="204" key="GridCell.Tab.0.left" timestamp="1592610521437">
+    <state width="1444" height="204" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1592612055975" />
+    <state width="1444" height="204" key="GridCell.Tab.0.left" timestamp="1592612055975">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1566" height="204" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1592610521437" />
-    <state width="1566" height="204" key="GridCell.Tab.0.right" timestamp="1592610521438">
+    <state width="1444" height="204" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1592612055975" />
+    <state width="1444" height="204" key="GridCell.Tab.0.right" timestamp="1592612055976">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1566" height="204" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1592610521438" />
+    <state width="1444" height="204" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1592612055976" />
     <state x="943" y="188" width="977" height="737" key="SettingsEditor" timestamp="1592368730094">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="943" y="188" width="977" height="737" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1592368730094" />
-    <state x="1053" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1592581518999">
+    <state x="1053" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1592612317933">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="1053" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2/72.27.1848.1053@72.27.1848.1053" timestamp="1592581518999" />
+    <state x="1053" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2/72.27.1848.1053@72.27.1848.1053" timestamp="1592612317933" />
     <state x="659" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1592533938696">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>

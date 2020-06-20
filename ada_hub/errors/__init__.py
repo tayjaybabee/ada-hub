@@ -45,3 +45,4 @@ class FileStateDeSyncError(ApplicationError):
 m_log.debug(f'Imported {__file__}')
 members = inspect.getmembers(sys.modules[__name__], inspect.isclass)
 m_log.debug(f'This introduces the following classes: {members}')
+print(members)
