@@ -11,7 +11,6 @@ from platform import system as os_family
 from ada_hub.lib.constants import HOME_DIR, DEFAULT_DATA_ROOT
 from ada_hub.lib.helpers.pid import write_pid
 from ada_hub.lib.helpers.config import load_config, create_config_file
-from ada_hub.errors import ConnectivityError
 from ada_hub import clean_exit
 
 NAME = 'AdaHub'
@@ -119,6 +118,7 @@ def parse_args():
 
 
 def main():
+    from time import sleep
     """
 
     This is the script's main entry point. If you have to call a function of this script directly for some reason
@@ -133,8 +133,12 @@ def main():
 
     log = start_logger(args)
 
+    sleep(0.02)
+
     log.debug(f'Starting Ada Hub in mode: {mode.upper()}')
     log.debug(f'Started Ada Hub with the following command-line args: {args}')
+
+    from ada_hub.errors import ConnectivityError
 
     if mode == 'credits':
         from ada_hub.lib.credits import show
