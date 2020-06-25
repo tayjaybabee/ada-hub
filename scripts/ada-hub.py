@@ -188,9 +188,9 @@ def main():
     log.debug(f'Determined PID directory to be: {pid_dir}')
     write_pid(pid_dir)
 
-    from ada_hub.lib.gui.models.windows.main_window import start as start_window
+    from ada_hub.lib.gui import GUIApp
 
-    start_window()
+    GUIApp()
 
 
 if __name__ == '__main__':

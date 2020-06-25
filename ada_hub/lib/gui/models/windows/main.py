@@ -3,23 +3,59 @@ from logging import getLogger
 
 from ada_hub.lib.constants import PROG
 
+
 class MainWindow(object):
 
-    def sense_frame_layout(self):
+    @staticmethod
+    def sense_frame_layout():
+        """
+
+        A static method that returns a layout structure for a frame in PySimpleGUIQt
+
+        Returns:
+            frame layout object
+
+        """
+        from ada_hub.media.icons import sensor_refresh
         layout = [
                 [Qt.Text('Temperature:', justification='left'),
                  Qt.Text('', justification='right', key='sense_temp_out'),
-                 Qt.Button('', image_data=)],
+                 Qt.Button('', image_data=sensor_refresh, key='refresh_sense_temp', enable_events=True)],
 
                 [Qt.Text('Relative Humidity:', justification='left'),
-                 Qt.Text('', justification='right', key='sense_hum_out')],
+                 Qt.Text('', justification='right', key='sense_hum_out'),
+                 Qt.Button('', image_data=sensor_refresh, key='refresh_sense_hum', enable_events=True)],
 
                 [Qt.Text('Barometric Pressure:', justification='left'),
-                 Qt.Text('', justification='right', key='sense_pres_out')],
-
+                 Qt.Text('', justification='right', key='sense_pres_out'),
+                 Qt.Button('', image_data=sensor_refresh, key='refresh_sense_pres', enable_events=True)]
         ]
 
+        return layout
+
+    def main_layout(self):
+        """
+
+        A method that returns a frame layout object for the entire window's frame
+
+        Returns:
+            frame layout object
+
+        """
+        layout = [
+                [Qt.Frame('Sensor Information', layout=self.sense_frame_layout())],
+                [Qt.Button('Quit', enable_events=True, key='quit_button'),
+                 Qt.Button('Refresh All', enable_events=True, key='refresh_all_button')]
+                ]
+
+        return layout
+
     def __init__(self):
+        """
+
+        Instantiate a new instance of MainWindow
+
+        """
 
         # Create an instance-flag that can be toggled to False or True when this window is active or not respectively
         self.win_active = False
@@ -29,5 +65,7 @@ class MainWindow(object):
         log = getLogger(self.log_name)
         log.debug(f'Started logger for {self.log_name}')
         log.debug(f'Initializing AdaHub.GUI.MainWindow...')
+
+        self.window = Qt.Window('AdaHub Home', layout=self.main_layout())
 
 
