@@ -15,6 +15,7 @@ HOME_DIR = f'{ Path.home() }/'
 
 DEFAULT_DATA_ROOT = str(f'{HOME_DIR}Inspyre-Softworks/{PROG}/')
 DEFAULT_CONF_ROOT = str(f'{DEFAULT_DATA_ROOT}conf/')
+DEFAULT_RUN_ROOT = str(f'{DEFAULT_DATA_ROOT}run/')
 
 default_conf_file_name = 'settings'
 default_conf_file_ext = 'ini'

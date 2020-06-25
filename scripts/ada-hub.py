@@ -164,7 +164,7 @@ def main():
         log.debug('Printing credits as directed...')
         third_party(config)
         log.debug('Exiting program')
-        clean_exit(0)
+        clean_exit(0, False)
 
     if args.data_dir:
         with open('conf_dir.txt', 'w') as f:

@@ -37,17 +37,16 @@ def write_pid(inc_run_dir=None):
     # If an argument was not provided for an incoming run directory (inc_run_dir) then the program defaults to using
     # the string stored in the c
     if inc_run_dir is None:
-        run_state_dir = DEFAULT_RUN_DIR
+        run_dir = DEFAULT_RUN_DIR
     else:
-        run_state_dir = str(inc_run_dir)
+        run_dir = str(inc_run_dir)
 
-    run_dir = run_state_dir
-    pid_filepath = f'{run_state_dir}PID'
+    pid_filepath = f'{run_dir}PID'
     log = get_logger(f'{NAME}.WritePID')
     log.debug(f'Received instruction to write PID to {pid_filepath}')
 
-    if os.path.exists(run_state_dir):
-        log.debug(f'Was able to find runtime directory: {run_state_dir}')
+    if os.path.exists(run_dir):
+        log.debug(f'Was able to find runtime directory: {run_dir}')
         log.debug(f'Looking for a PID file already present in target location...')
         if os.path.isfile(pid_filepath):
             log.debug(f'Found PID file at: {pid_filepath}')
@@ -82,6 +81,7 @@ def remove_pid():
     log.debug('Received request to remove PID file for shutdown')
 
     pid_filepath = f'{run_dir}PID'
+    log.debug(f'PID file should be located at: {pid_filepath}')
 
     # Make sure the directory is still there to begin with. We'd rather error-out knowing at exactly which step and
     # why than just have a random permissions or file not found error when we try to work in this directory
