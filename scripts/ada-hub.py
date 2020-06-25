@@ -52,7 +52,7 @@ def parse_args():
     Returns:
 
     """
-    parser = argparse.ArgumentParser('AdaHub')
+    parser = argparse.ArgumentParser('ada-hub')
 
     verbosity_args = parser.add_mutually_exclusive_group(required=False)
 
