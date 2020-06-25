@@ -34,17 +34,24 @@ def write_pid(inc_run_dir=None):
     """
     global run_dir
 
+    log = get_logger(f'{NAME}.WritePID')
+    log.debug(f'Started logger for {NAME}.WritePID')
+
     # If an argument was not provided for an incoming run directory (inc_run_dir) then the program defaults to using
     # the string stored in the c
     if inc_run_dir is None:
+        log.debug(f'No run directory provided in parameters. Falling back to default: {DEFAULT_RUN_DIR}')
         run_dir = DEFAULT_RUN_DIR
     else:
+        log.debug(f'Received run directory as a parameter with the value of {inc_run_dir}')
         run_dir = str(inc_run_dir)
 
+    # Determine the filepath of the PID file
     pid_filepath = f'{run_dir}PID'
-    log = get_logger(f'{NAME}.WritePID')
-    log.debug(f'Received instruction to write PID to {pid_filepath}')
+    log.debug(f'Writing PID to {pid_filepath}')
 
+    # See if there is already a PID file present, if so; report it through a warning log and proceed. If a PID file
+    # is not found then the program will create one
     if os.path.exists(run_dir):
         log.debug(f'Was able to find runtime directory: {run_dir}')
         log.debug(f'Looking for a PID file already present in target location...')
@@ -55,12 +62,18 @@ def write_pid(inc_run_dir=None):
             log.debug(f'No PID file found in: {pid_filepath}')
             log.debug(f'Will now create PID file in: {pid_filepath}')
 
+        # Write the PID to a file
         with open(pid_filepath, 'w') as file:
             file.write(str(PID))
+
+        # Announce the program PID
+        log.info(f'My PID is: {PID}')
 
     else:
         log.debug(f'{run_dir} does not exist. Creating.')
         os.makedirs(run_dir)
+        log.debug('Starting function over now that run directory exists.')
+        write_pid(run_dir)
 
 
 def remove_pid():

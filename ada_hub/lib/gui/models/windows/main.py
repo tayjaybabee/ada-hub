@@ -19,16 +19,16 @@ class MainWindow(object):
         from ada_hub.media.icons import sensor_refresh
         layout = [
                 [Qt.Text('Temperature:', justification='left'),
-                 Qt.Text('', justification='right', key='sense_temp_out'),
+                 Qt.Text('', justification='center', key='sense_temp_out'),
                  Qt.Button('', image_data=sensor_refresh, key='refresh_sense_temp', enable_events=True)],
 
                 [Qt.Text('Relative Humidity:', justification='left'),
-                 Qt.Text('', justification='right', key='sense_hum_out'),
-                 Qt.Button('', image_data=sensor_refresh, key='refresh_sense_hum', enable_events=True)],
+                 Qt.Text('', justification='center', key='sense_hum_out'),
+                 Qt.Button('', image_data=sensor_refresh, key='refresh_sense_hum', enable_events=True,)],
 
                 [Qt.Text('Barometric Pressure:', justification='left'),
-                 Qt.Text('', justification='right', key='sense_pres_out'),
-                 Qt.Button('', image_data=sensor_refresh, key='refresh_sense_pres', enable_events=True)]
+                 Qt.Text('', justification='center', key='sense_pres_out'),
+                 Qt.Button('', image_data=sensor_refresh, key='refresh_sense_pres', enable_events=True,)]
         ]
 
         return layout

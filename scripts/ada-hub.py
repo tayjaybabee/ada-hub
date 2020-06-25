@@ -158,6 +158,7 @@ def main():
     from ada_hub.errors import ConnectivityError
 
     config = AdaHubConfig(args.config_dir)
+    config = config.config
 
     if mode == 'credits':
         from ada_hub.lib.helpers.credits import third_party
@@ -175,7 +176,6 @@ def main():
     else:
         data_dir = args.data_dir
 
-
     connected = test_connection()
 
     if not connected:
@@ -188,9 +188,11 @@ def main():
     log.debug(f'Determined PID directory to be: {pid_dir}')
     write_pid(pid_dir)
 
-    from ada_hub.lib.gui import GUIApp
+    from ada_hub.lib.gui import GUIApp, GUIConfig
 
-    GUIApp()
+    gui_config = GUIConfig(config)
+
+    GUIApp(gui_config.conf)
 
 
 if __name__ == '__main__':
