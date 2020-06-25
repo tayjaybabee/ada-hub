@@ -16,8 +16,7 @@ def clean_exit(status, should_rem_pid=True):
     Args:
         status (int): Either 1 or 0. 0 means everything went as expected. 1 means an error or exception occurred.
 
-        should_rem_pid (bool): Should the program attempt to remove the file PID located in the program's 'run'
-        directory? (Defaults to True)
+        should_rem_pid (bool): Should the program attempt to remove the file PID located in the program's 'run' directory? (Defaults to True)
 
     Returns:
         None
