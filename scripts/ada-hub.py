@@ -10,8 +10,9 @@ from platform import system as os_family
 
 from ada_hub.lib.constants import HOME_DIR, DEFAULT_DATA_ROOT
 from ada_hub.lib.helpers.pid import write_pid
-from ada_hub.lib.helpers.config import load_config, create_config_file
+from ada_hub.lib.config import AdaHubConfig
 from ada_hub import clean_exit
+
 
 NAME = 'AdaHub'
 
@@ -93,9 +94,13 @@ def parse_args():
                                        dest='command',
                                        description='Valid sub-commands for ada-hub')
 
+    # Create the 'credits' sub-command. This will be the command a user uses in order to see all the third-party
+    # APIs, media, etc that are used in the operation of of the AdaHub application.
     credits_subparser = subparsers.add_parser('credits', help='Print out the credits for all external '
                                                               'services/software used to make Ada Hub')
 
+    # Add an argument to the 'credits' sub-command that will clear the active terminal screen before outputting the
+    # credits in order to improve readability, etc
     credits_subparser.add_argument('-c', '--clear-screen',
                                    action='store_true',
                                    default=False,
@@ -105,14 +110,26 @@ def parse_args():
 
     cli_subparser.add_argument('-l', '--location', type=int, action='store')
 
+    # Create the 'GUI' sub-command. This will be the command a user uses to start the program in graphical mode.
     gui_subparser = subparsers.add_parser('gui', help='Start the program with the full GUI')
 
+    # Add an argument to the 'GUI' sub-command that will instruct the program to start the SenseHat emulator instead
+    # of attempting to find an attached HAT. This in-turn starts a graphical program so this will only be available
+    # if the user is running AdaHub in graphical mode.
     gui_subparser.add_argument('-e', '--emulator', help='Start the Ada Hub application with the Sense-Emu backend.',
                                default=False)
 
+    # Add a global argument to allow input of a custom data-directory location.
     parser.add_argument('-D', '--data-dir', action='store', type=argparse.FileType('w'),
                         help="Provide the filesystem-location of your application's data directory, "
-                             "or the destination you want the program to create a data-directory in.")
+                             "or the destination you want the program to create a data-directory in.",
+                        required=False)
+
+    # Add a global argument to allow input of a custom config-directory location.
+    parser.add_argument('-C', '--config-dir', action='store', type=argparse.FileType('w'),
+                        help="Provide the filesystem-location of your application's configuration directory, "
+                             "or the destination you want the program to create a configuration directory in.",
+                        required=False)
 
     return parser.parse_args()
 
@@ -140,10 +157,12 @@ def main():
 
     from ada_hub.errors import ConnectivityError
 
+    config = AdaHubConfig(args.config_dir)
+
     if mode == 'credits':
-        from ada_hub.lib.credits import show
+        from ada_hub.lib.helpers.credits import third_party
         log.debug('Printing credits as directed...')
-        show()
+        third_party(config)
         log.debug('Exiting program')
         clean_exit(0)
 
@@ -156,27 +175,6 @@ def main():
     else:
         data_dir = args.data_dir
 
-    conf_dir_path = data_dir + 'conf/'
-    conf_file_name = 'settings.ini'
-    conf_file_path = conf_dir_path + conf_file_name
-
-    if os.path.exists(data_dir):
-        log.debug(f'{data_dir} exists, looking for existing config file.')
-        if os.path.isfile(conf_file_path):
-            log.debug(f'Found {conf_file_path}')
-            config = load_config(conf_file_path)
-    else:
-        log.debug(f'Making configuration directory: {conf_dir_path}')
-        os.makedirs(conf_dir_path)
-        log.debug(f'Created!')
-
-    if os.path.isfile(conf_file_path):
-        log.debug(f'Found {conf_file_path}')
-        config = load_config(conf_file_path)
-    else:
-        log.debug(f'Could not find {conf_file_path}')
-        log.debug('Calling config file creator')
-        create_config_file(str(f'{data_dir}conf/settings.ini'))
 
     connected = test_connection()
 
