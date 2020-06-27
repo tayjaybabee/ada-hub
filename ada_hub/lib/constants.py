@@ -8,6 +8,11 @@ from platform import system
 from os import getpid
 from pathlib import Path
 
+# Introduce constants containing the URL to the ada-hub repository on Github, and then concatenate that with
+# '/issues/new' to form the URL to create a new issue. Both of these can be used when informing a user
+REPO_URL = 'https://github.com/tayjaybabee/ada-hub'
+ISSUE_URL = f'{REPO_URL}/issues/new'
+
 PROG = 'AdaHub'
 PID = getpid()
 
