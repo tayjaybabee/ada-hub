@@ -38,6 +38,7 @@ class MainWindow(object):
 
 
     def main_layout(self):
+        from ada_hub.media.icons import quit_icon
         """
 
         A method that returns a frame layout object for the entire window's frame
@@ -48,7 +49,7 @@ class MainWindow(object):
         """
         layout = [
                 [ Qt.Frame('Sensor Information', layout=self.sense_frame_layout()) ],
-                [ Qt.Button('Quit', enable_events=True, key='quit_button'),
+                [ Qt.Button('Quit', enable_events=True, key='quit_button', image_data=quit_icon),
                   Qt.Button('Refresh All', enable_events=True, key='refresh_all_button') ]
                 ]
 
