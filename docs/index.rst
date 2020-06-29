@@ -13,6 +13,11 @@ Welcome to AdaHub's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+.. argparse::
+   :filename: ../scripts/ada-hub.py
+   :func: parse_args
+   :prog: ada-hub
+
 
 
 Indices and tables
