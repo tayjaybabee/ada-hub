@@ -6,6 +6,7 @@ Subpackages
 
 .. toctree::
 
+    ada_hub.lib.ada_sense
     ada_hub.lib.config
     ada_hub.lib.gui
     ada_hub.lib.helpers

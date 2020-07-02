@@ -119,6 +119,15 @@ def parse_args():
     gui_subparser.add_argument('-e', '--emulator', help='Start the Ada Hub application with the Sense-Emu backend.',
                                default=False)
 
+    gui_subcommands = gui_subparser.add_subparsers(title='GUI Specific Commands', dest='gui_command',
+                                                   help='Sub-commands specific to information or manipulation of the '
+                                                        'Graphical User Interface?')
+
+    gui_subcommands.add_parser('list-themes', help='Print out a list of strings that contain a list of acceptable '
+                                                   'theme names, and then quits. (Useful for if you want to specify a '
+                                                   'theme in your program-opening commands')
+
+
     # Add a global argument to allow input of a custom data-directory location.
     parser.add_argument('-D', '--data-dir', action='store', type=argparse.FileType('w'),
                         help="Provide the filesystem-location of your application's data directory, "
@@ -192,7 +201,7 @@ def main():
 
     gui_config = GUIConfig(config)
 
-    GUIApp(gui_config.conf)
+    GUIApp(gui_config.conf, args)
 
 
 if __name__ == '__main__':

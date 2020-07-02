@@ -12,6 +12,14 @@ ada\_hub.lib.helpers.credits module
     :undoc-members:
     :show-inheritance:
 
+ada\_hub.lib.helpers.debug module
+---------------------------------
+
+.. automodule:: ada_hub.lib.helpers.debug
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 ada\_hub.lib.helpers.network module
 -----------------------------------
 
@@ -24,6 +32,14 @@ ada\_hub.lib.helpers.pid module
 -------------------------------
 
 .. automodule:: ada_hub.lib.helpers.pid
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ada\_hub.lib.helpers.system module
+----------------------------------
+
+.. automodule:: ada_hub.lib.helpers.system
     :members:
     :undoc-members:
     :show-inheritance:

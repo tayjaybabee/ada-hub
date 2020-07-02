@@ -91,10 +91,36 @@ class AdaSense(object):
         return config
 
     def get_humidity(self):
-        pass
+        """
+
+        Query the humidity sensor and receive the relative humidity
+
+        Returns:
+            str: A string containing the result
+        """
+
+        log = getLogger(f'{PROG}.AdaSense.get_humidity')
+        log.debug('Received request to fetch relative humidity.')
+
+        return self.sense.humidity
 
     def get_temp(self):
-        pass
+        """
+
+        Get the current ambient temperature according to the humidity sensor
+
+        Returns:
+            float: The current temperature in celsius, rounded to two decimal places.
+
+        """
+
+        log = getLogger(f'{PROG}.AdaSense.get_temp')
+        log.debug('Received request to fetch ambient temperature.')
+
+        temp = self.sense.temperature
+        temp = round(temp, 2)
+
+        return self.sense.temperature
 
     def convert_temp_to_f(self):
         pass
@@ -112,7 +138,7 @@ class AdaSense(object):
         # If we're not able to find the 'ADA_SENSE_SETTINGS' section in the config file, we should go ahead and
         # create one, add it, and fill it with defaults.
         if 'ADA_SENSE_SETTINGS' not in config.sections():
-            self.config = self. add_default_settings()
+            self.config = self. add_default_settings(config)
 
         log.debug(f'Setting up attributes.')
 
@@ -144,20 +170,7 @@ class AdaSense(object):
                 # If we were unable to find an item in our list of valid temperature reading scales we warn the user
                 # and then fall back on the configuration object which (at the very least) should be loaded and
                 # assigned by this point
-                log.warning('Caller passed a value to the "temp_units" parameter, but it was invalid. falling back on'
-                            ' value specified by the configuration file.')
-                self.temp_units = config['ADA_SENSE_SETTINGS']['temp_units']
-
-        else:
-
-            # If the caller did not provide a value for the 'temp_units' parameter we fall-back to fetching this
-            # value from the configuration object.
-            log.debug('No temperature unit specified in call. Falling back to configuration value')
-            self.temp_units = config['ADA_SENSE_SETTINGS']['temp_units']
-
-        # Report the final setting for temperature units.
-        log.debug(f'Set the temperature units to {self.temp_units}.')
-
+                log.warning('Caller passed a value to the temp_units')
         # Define an attribute named 'sense' with a value of None type. This is to be filled later
         self.sense = None
 

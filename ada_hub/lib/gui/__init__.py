@@ -1,5 +1,6 @@
 from ada_hub.lib.constants import PROG
 from ada_hub.lib.config import write_config
+from ada_hub.lib.helpers.debug import format_members
 
 from logging import getLogger
 
@@ -32,6 +33,20 @@ class GUIConfig:
         # Return the modified configuration object
         return prog_conf
 
+    def update_pres(self):
+        pass
+
+    def update_hum(self):
+        pass
+
+    def update_temp(self):
+        pass
+
+    def update_all(self):
+        self.update_temp()
+        self.update_hum()
+        self.update_pres()
+
     def __init__(self, config):
         """
 
@@ -57,7 +72,7 @@ class GUIConfig:
         if section not in config.sections():
             log.debug('The configuration does not contain a "GUI_PREFS" section. Creating!')
             config = self.merge_default_config(config)
-            log.debug(f'Received the modified configuration object. With these sections: {config.sections}')
+            log.debug(f'Received the modified configuration object. With these sections: {config.sections()}')
             log.debug('Writing modified configuration to disk.')
             write_config(config, conf_filepath)
             log.debug('Config written!')
@@ -65,10 +80,12 @@ class GUIConfig:
         # Go ahead and assign the config to an aptly named attribute
         self.conf = config
 
+        log.debug(f'Initialized GUI config in the following state: {self.conf["GUI_PREFS"]}')
+
 
 class GUIApp(object):
 
-    def __init__(self, config):
+    def __init__(self, config, arg_parser):
         """
 
         Initialize a new instance of GUIApp, load configuration for the GUI
@@ -77,9 +94,13 @@ class GUIApp(object):
             config (object): ConfigParser object
 
         """
+        from ada_hub.lib.ada_sense import AdaSense
         from ada_hub.lib.gui.models.windows.main import MainWindow
         from ada_hub import clean_exit
 
+        log = getLogger(f'{PROG}.Application.GUI')
+
+        log.debug('Loading main GUI application window.')
         # Instantiate an instance of MainWindow which is the main window for the AdaHub application.
         main_win = MainWindow(config)
 
@@ -99,6 +120,9 @@ class GUIApp(object):
         # Switch the 'main_active' flag to True to prevent any possibility of window spawn abuse/accidents/bugs
         self.main_active = True
 
+        # Load the sensor and LED matrices and their associated hardware and drivers.
+        self.sense_hat =AdaSense(config)
+
         # Start a while loop (which will be our main loop) to run the 'MainWindow'
         while self.main_active:
 
@@ -115,3 +139,8 @@ class GUIApp(object):
         # Exit the program cleanly
         if not self.main_active:
             clean_exit(0)
+
+
+m_log_name = str(f'{ PROG }.GUI')
+m_log = getLogger(m_log_name)
+
