@@ -141,4 +141,4 @@ cython_debug/
 
 poetry.lock
 
-ada_sense/lib/gui/assets/icon_sets/sketch/original
+ada_hub/lib/gui/assets/icon_sets/*/original
