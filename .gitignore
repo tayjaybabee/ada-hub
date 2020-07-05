@@ -140,3 +140,5 @@ dmypy.json
 cython_debug/
 
 poetry.lock
+
+ada_sense/lib/gui/assets/icon_sets/*/original
