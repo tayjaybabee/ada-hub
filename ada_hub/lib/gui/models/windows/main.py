@@ -6,11 +6,13 @@ from ada_hub.lib.constants import PROG
 # Import icons
 from ada_hub.media.icons import quit_icon, sensor_refresh
 
+# Import Sense Hat interface
+from ada_hub.lib.ada_sense import AdaSense
+
 class MainWindow(object):
 
 
-    @staticmethod
-    def sense_frame_layout():
+    def sense_frame_layout(self):
         """
 
         A static method that returns a layout structure for a frame in PySimpleGUIQt
@@ -23,16 +25,16 @@ class MainWindow(object):
 
         layout = [
                 [ Qt.Text('Temperature:', justification='left'),
-                  Qt.Text('', justification='center', key='sense_temp_out'),
+                  Qt.Text(self.ada_sense.get_temp(), justification='center', key='sense_temp_out'),
                   Qt.Button('Refresh', image_data=sensor_refresh, key='refresh_sense_temp', enable_events=True,
                             size=(36, 36))],
 
                 [ Qt.Text('Relative Humidity:', justification='left'),
-                  Qt.Text('', justification='center', key='sense_hum_out'),
+                  Qt.Text(self.ada_sense.get_humidity(), justification='center', key='sense_hum_out'),
                   Qt.Button('Refresh', image_data=sensor_refresh, key='refresh_sense_hum', enable_events=True, ) ],
 
                 [ Qt.Text('Barometric Pressure:', justification='left'),
-                  Qt.Text('', justification='center', key='sense_pres_out'),
+                  Qt.Text(self.ada_sense.get_pressure(), justification='center', key='sense_pres_out'),
                   Qt.Button('Refresh', image_data=sensor_refresh, key='refresh_sense_pres', enable_events=True, ) ]
                 ]
 
@@ -66,6 +68,9 @@ class MainWindow(object):
 
         # Create an instance-flag that can be toggled to False or True when this window is active or not respectively
         self.win_active = False
+
+        # Start an instance of the AdaSense class which will allow us to easily interface with the SenseHat
+        self.ada_sense = AdaSense(config=config)
 
         # Create a log-name for this class
         self.log_name = f'{PROG}.GUI.MainWindow'

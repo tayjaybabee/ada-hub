@@ -1,16 +1,67 @@
 from ada_hub.lib.constants import PROG
 from ada_hub.lib.helpers.system import gui_capable
 from ada_hub.lib.helpers.debug import format_members
+from ada_hub.lib.ada_sense.helpers.config import add_new
 from ada_hub.lib.config import write_config
+
+# Import exceptions
+from ada_hub.lib.ada_sense.errors import InvalidTempScaleError
 
 from logging import getLogger
 
 
 class AdaSense(object):
 
-    def set_temp_units(self, new_val):
-        log = getLogger(f'{PROG}.AdaSense.set_temp_units')
-        log.debug(f'Received request to change configured default temp reading units to {new_val}')
+    def check_scale(self, alt_scale=None):
+        """
+
+        Checks the configured temperature scale found in self.temp_scale for validity.
+
+        Returns:
+            bool: Will return True if successful
+
+        """
+
+        # Define a logger name, and start it. Then announce that we started it.
+        log_name = str(f'{self.log_name}.check_scale')
+        log = getLogger(log_name)
+        log.debug(f'Started logger for {log_name}')
+        log.debug(f'Received request to check the configured temperature units for validity')
+        log.debug(f'Current configured temperature unit is: {self.temp_scale}')
+
+        if alt_scale is not None:
+            log.debug('Received argument for alt_scale, checking that instead of current configuration')
+            if not alt_scale in self.valid_temp_scales:
+                raise InvalidTempScaleError()
+            else:
+                return True
+
+        # If the configured temperature unit is not found in the list of valid temperature scales raise an
+        # InvalidTempScaleError exception, otherwise; just return True
+        if self.temp_scale not in self.valid_temp_scales:
+            raise InvalidTempScaleError()
+        else:
+            return True
+
+    def change_temp_scale(self, new_scale):
+        log_name = str(self.log_name + '.change_temp_scale')
+        log = getLogger(log_name)
+
+        log.debug(f'Started logger for {log_name}')
+        log.debug(f'Received request to change temp scale from {self.temp_scale} to {new_scale}')
+
+        if self.temp_scale == new_scale:
+            log.warn('These are the same values!')
+            return
+
+        try:
+            self.check_scale(new_scale)
+            self.config['ADA_SENSE_SETTINGS']['temp_scale'] = new_scale
+            self.temp_scale = new_scale
+            write_config(self.config)
+        except InvalidTempScaleError as e:
+            log.warning(e.message)
+
 
     def load_sense(self, emulate=False):
         log = getLogger(f'{PROG}.load_sense')
@@ -54,42 +105,6 @@ class AdaSense(object):
             # that class while we store
             self.sense = SenseHat()
 
-    @staticmethod
-    def add_default_settings(config):
-        conf_section = 'ADA_SENSE_SETTINGS'
-
-        log = getLogger(f'{PROG}.AdaSense.add_default_settings')
-        log.debug(f'Logger started for {__name__}')
-
-        log.debug('Received request to build default')
-
-
-        # Add the section
-        config.add_section(conf_section)
-        log.debug(f'Created config section. The sections contained within the configuration are now as follows: '
-                  f'{config.sections()}')
-
-        sense_config = config[conf_section]
-
-        # Fill our new section with some default values.
-        config.set(conf_section, 'always_emulate', 'False')
-        log.debug(f'Always Emulate: {sense_config["always_emulate"]}')
-
-        config.set(conf_section, 'never_emulate', 'False')
-        log.debug(f'Never Emulate: {sense_config[ "never_emulate" ]}')
-
-        config.set(conf_section, 'temp_units', 'c')
-        log.debug(f'Temperature Units: {sense_config["temp_units"]}')
-
-        config.set(conf_section, 'always_auto_refresh', 'False')
-        log.debug(f'Always auto-refresh readings: {sense_config["always_auto_refresh"]}')
-
-        log.debug('Finished assembling Sense configuration. Writing to disk...')
-        write_config(config, config['RUNTIME']['conf_file_path'])
-        log.debug('Returned from writing configuration to disk.')
-
-        return config
-
     def get_humidity(self):
         """
 
@@ -102,9 +117,13 @@ class AdaSense(object):
         log = getLogger(f'{PROG}.AdaSense.get_humidity')
         log.debug('Received request to fetch relative humidity.')
 
-        return self.sense.humidity
+        hum = round(self.sense.humidity)
+        f_hum = str(hum) + "%"
+
+        return f_hum
 
     def get_temp(self):
+        from ada_hub.lib.ada_sense.helpers.converters import c_to_f
         """
 
         Get the current ambient temperature according to the humidity sensor
@@ -120,25 +139,60 @@ class AdaSense(object):
         temp = self.sense.temperature
         temp = round(temp, 2)
 
-        return self.sense.temperature
+        if self.temp_scale == 'f' or self.temp_scale == 'fahrenheit':
+            temp = c_to_f(temp)
 
-    def convert_temp_to_f(self):
-        pass
+        return temp
 
-    def __init__(self, config, emulate=False, temp_units=None):
+    def get_pressure(self):
+        """
 
-        log_name = str(f'{PROG}.AdaSense')
+        Query the sense hat for barometric pressure data.
+
+        Returns:
+            str: The barometric pressure in millibars
+
+        """
+
+        # Start a logger for debugging
+        log_name = str(f'{PROG}.AdaSense.get_pressure')
         log = getLogger(log_name)
+
+        # If we're running in the verbose mode we'll go ahead and announce that we've started the logger and that
+        # we're querying the sensor
         log.debug(f'Started logger for {log_name}')
+        log.debug('Received request to fetch barometric pressure.')
+        log.debug('Querying sensor...')
+
+        # Query the sensor and load the results into a variable
+        pres = self.sense.pressure
+
+        # Announce that our sensor query was successful and that we're going to return it to the caller
+        log.debug(f'Received {pres} for pressure sensor value. Rounding and appending unit...')
+
+        pres = round(pres)
+        pres = str(str(pres) + 'mbar')
+
+        log.debug(f'Returning rounded and formatted pressure reading ({pres}) to caller.')
+
+        # Return formatted and rounded result to the caller
+        return pres
+
+    def __init__(self, config):
+
+        self.log_name = str(f'{PROG}.AdaSense')
+        log = getLogger(self.log_name)
+        log.debug(f'Started logger for {self.log_name}')
 
         log.debug(f'Initializing class.')
 
         log.debug('Attempting to load configuration from the config object received.')
+        self.config = config
 
         # If we're not able to find the 'ADA_SENSE_SETTINGS' section in the config file, we should go ahead and
         # create one, add it, and fill it with defaults.
         if 'ADA_SENSE_SETTINGS' not in config.sections():
-            self.config = self. add_default_settings(config)
+            self.config = add_new(config)
 
         log.debug(f'Setting up attributes.')
 
@@ -152,30 +206,21 @@ class AdaSense(object):
                 'f',
                 'fahrenheit',
                 'k',
-                'kelvin'
-                ]
-        log.debug(f'Set up the following list of acceptable values for the units the temperature is read in: '
-                  f'{",".join(self.valid_temp_scales)}')
+            ]
+        self.temp_scale = self.config['ADA_SENSE_SETTINGS']['temp_scale']
 
-        # If the caller provided a value for the temp_units parameter we check to make sure that what we were given
-        # matches an item on our list of valid temperature units (or 'valid_temp_scales').
-        if temp_units is not None:
-            if temp_units.lower() in self.valid_temp_scales:
-                log.debug('The "temp_units" parameter contains a valid option, using this for this session.')
-                self.temp_units = temp_units.capitalize()
-                log.debug(f'Attribute set to {self.temp_units}')
+        try:
+            self.check_scale()
+        except InvalidTempScaleError as e:
+            log.error(e.message)
+            log.info('Falling back to using celsius as our temperature scale.')
+            self.change_temp_scale('celsius')
 
-            else:
-
-                # If we were unable to find an item in our list of valid temperature reading scales we warn the user
-                # and then fall back on the configuration object which (at the very least) should be loaded and
-                # assigned by this point
-                log.warning('Caller passed a value to the temp_units')
         # Define an attribute named 'sense' with a value of None type. This is to be filled later
         self.sense = None
 
         # Let's go ahead and fill that attribute by running the 'load_sense' function of this class
-        self.load_sense(emulate=emulate)
+        self.load_sense()
 
 
 m_log = getLogger(PROG)

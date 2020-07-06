@@ -136,6 +136,56 @@ class GUIApp(object):
                 self.main_win.close()
                 self.main_active = False
 
+            # If the user presses the 'refresh all' button within the sensor reading frame, we refresh all sensor
+            # fields.
+            if event == 'refresh_all_button':
+                log.debug('Received request to refresh all values in the Sensor info frame')
+
+                log.debug('Updating temperature')
+                self.main_win['sense_temp_out'].update(self.sense_hat.get_temp())
+
+                log.debug('Updating pressure')
+                self.main_win['sense_pres_out'].update(self.sense_hat.get_pressure())
+
+                log.debug('Updating humidity')
+                self.main_win['sense_hum_out'].update(self.sense_hat.get_humidity())
+
+                log.debug('Refreshing window!')
+                self.main_win.refresh()
+
+            # If the user presses the refresh button in the row associated with the temperature sensor, we'll refresh
+            # that reading
+            if event == 'refresh_sense_temp':
+                log.debug('User pressed "refresh_temp button"')
+
+                log.debug('Updating temperature')
+                self.main_win['sense_temp_out'].update(self.sense_hat.get_temp())
+
+                log.debug('Refreshing window!')
+                self.main_win.refresh()
+
+            # If the user presses the refresh button in the row associated with the humidity sensor, we'll refresh
+            # that reading
+            if event == 'refresh_sense_hum':
+                log.debug('User pressed button to refresh humidity reading')
+
+                log.debug('Updating humidity')
+                self.main_win['sense_hum_out'].update(self.sense_hat.get_humidity())
+
+                log.debug('Refreshing window!')
+                self.main_win.refresh()
+
+            # If the user presses the refresh button in the row associated with the pressure sensor, we'll refresh
+            # that reading
+            if event == 'refresh_sense_pres':
+                log.debug('User pressed button to refresh pressure reading')
+
+                log.debug('Updating barometric pressure')
+                self.main_win['sense_pres_out'].update(self.sense_hat.get_pressure())
+
+                log.debug('Refreshing window!')
+                self.main_win.refresh()
+
         # Exit the program cleanly
         if not self.main_active:
             clean_exit(0)

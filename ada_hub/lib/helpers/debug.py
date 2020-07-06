@@ -83,28 +83,44 @@ def conf_sect_readout(config: object, target_section: str, sep_str='|', no_strip
 
     Args:
         config (object): A ConfigParser type object that contains the section you'd like to readout
+
         target_section (str): A string that is equal to the name of the section you'd like to readout
+
         sep_str (str): A string that is equal to what should sit between the padding in the separator string between
                        resulting entry value pairs
+
         no_strip (bool): (Defaults to False) Do not strip preceding or trailing whitespace
+
         pad_size (int): (Defaults to 1) How many times should pad_str (by default: ' ') be repeated on each side of the
                         separator string?
-        pad_str (): (Defaults to ' ') Replace the default pad character (a single whitespace) with whatever string
+
+        pad_str (str): (Defaults to ' ') Replace the default pad character (a single whitespace) with whatever string
                     you desire
-        no_pad (): Do not pad the separation character. This will result in any arguments provided to pad_size,
-                   and pad_str will be ignored and no padding will surround the 'key: value' pair
 
-                   NOTE:
-                       1. Using this argument and not also using 'no_strip = True' will still result in your input
-                          being stripped.
+        no_pad (bool): Do not pad the separation character. This will result in any arguments provided to pad_size,
+                       and pad_str will be ignored and no padding will surround the 'key: value' pair
 
-                       2. Using this argument does not ensure that there will be a lack of whitespace after the
-                          separator string as the program will insert a single whitespace to ensure readability. You
-                          can override this behavior by simple giving a value of True to the 'leave_sep_str_alone"
-                          flag instead of using 'no_pad'
+                       NOTE:
+                           1. Using this argument and not also using 'no_strip = True' will still result in your input
+                              being stripped.
+
+                           2. Using this argument does not ensure that there will be a lack of whitespace after the
+                              separator string as the program will insert a single whitespace to ensure readability. You
+                              can override this behavior by simple giving a value of True to the 'leave_sep_str_alone"
+                              flag instead of using 'no_pad'
 
 
-        leave_sep_str_alone ():
+        leave_sep_str_alone (bool): Make no modifications to the separator.
+                                    NOTE:
+                                        Changing this from it's default value will result in the following arguments
+                                        being ignored:
+
+                                        * pad_size
+                                        * pad_str
+
+                                        This argument conflicts with 'plain_sep' using both arguments will result in
+                                        a ConflictingArgumentsError
+
         plain_sep (bool): If True; the separator between 'key: value' pairs will simply be ', '
 
                           For Example:
@@ -121,9 +137,12 @@ def conf_sect_readout(config: object, target_section: str, sep_str='|', no_strip
                                * pad_str
 
     Returns:
+        str: A string that consists of all the keys and their values that can be found in the target section of the
+             provided config object
 
     """
     log = getLogger(PROG + '.conf_sect_readout')
+
 
     if leave_sep_str_alone and plain_sep:
         try:
@@ -143,24 +162,26 @@ def conf_sect_readout(config: object, target_section: str, sep_str='|', no_strip
             # result to the 'sep' variable
             if not no_strip:
                 sep = sep_str.strip()
+            else:
+
+                # If we were told to leave the separator string alone we just make the value of 'sep' whatever is
+                # provided by the sep_str argument
+                sep = sep_str
 
             if not no_pad:
-                pad1 = pad
+                pad1 = str(pad_str * pad_size)
+                pad2 = pad1
+            else:
+                pad1 = ''
+                pad2 = pad1
+
+            seperator = str(f'{pad1}{sep}{pad2}')
     else:
-        sep = ', '
-
-    # We stripped the whitespace in the previous instruction because we want to ensure that our string isn't returned
-    # to the caller in a malformed state. Here, we multiply a whitespace character string by the integer provided (or
-    # the default value) by the 'pad' argument
-    if no_pad:
-        pad1 = str('')
-        pad2 = str(' ')
-
-    pad = str(f"{' ' * pad}")
+        seperator = ', '
 
     # Using the result of the above instruction as our pad string (so a copy on each side) we assemble a proper
     # separator string
-    separator = str(f'{pad1}{sep}{pad}')
+    separator = str(f'{pad1}{sep}{pad2}')
 
     # Declare a variable that contains an empty list to append to in the next block.
     key_value_pair_list = []
