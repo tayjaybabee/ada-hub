@@ -33,20 +33,6 @@ class GUIConfig:
         # Return the modified configuration object
         return prog_conf
 
-    def update_pres(self):
-        pass
-
-    def update_hum(self):
-        pass
-
-    def update_temp(self):
-        pass
-
-    def update_all(self):
-        self.update_temp()
-        self.update_hum()
-        self.update_pres()
-
     def __init__(self, config):
         """
 
