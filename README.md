@@ -1,7 +1,5 @@
-= Usage
 
-[source,shell]
-----
+```shell
 
 usage: ada-hub [-h] [-v | -d | -q | -s] [-W | -w] [-D DATA_DIR]
                [-C CONFIG_DIR]
@@ -41,4 +39,6 @@ Sub-Commands:
     cli                 Run a quick query using the command line (no GUI)
     gui                 Start the program with the full GUI
 
-----
+```
+
+![image](https://user-images.githubusercontent.com/43686206/86574646-c5291100-bf3b-11ea-9611-7bb72f66448d.png)
