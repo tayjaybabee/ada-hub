@@ -3,6 +3,7 @@ from ada_hub.lib.config import write_config
 from ada_hub.lib.helpers.debug import format_members
 
 from logging import getLogger
+from importlib import import_module
 
 
 class GUIConfig:
@@ -27,6 +28,7 @@ class GUIConfig:
 
         # Add our basic configuration structure
         prog_conf.set('GUI_PREFS', 'theme', 'DarkAmber')
+        prog_conf.set('GUI_PREFS', 'icon_set', 'sketch')
         prog_conf.set('GUI_PREFS', 'grab_anywhere', 'False')
         prog_conf.set('GUI_PREFS', 'advanced_mode', 'False')
 
@@ -95,6 +97,7 @@ class GUIApp(object):
 
         # Extract the theme indicated by the configuration to an aptly named attribute
         self.theme = config['GUI_PREFS']['theme']
+        icon_set_str = config['GUI_PREFS']['icon_set']
 
         # Set up a flag that will be used to indicate the running status of this window
         self.main_active = main_win.win_active

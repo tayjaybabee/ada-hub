@@ -3,8 +3,7 @@ from logging import getLogger
 
 from ada_hub.lib.constants import PROG
 
-# Import icons
-from ada_hub.media.icons import quit_icon, sensor_refresh
+from ada_hub.lib.gui.helpers import import_icon_set
 
 # Import Sense Hat interface
 from ada_hub.lib.ada_sense import AdaSense
@@ -21,21 +20,19 @@ class MainWindow(object):
             frame layout object
 
         """
-        from ada_hub.media.icons import sensor_refresh
-
         layout = [
                 [ Qt.Text('Temperature:', justification='left'),
                   Qt.Text(self.ada_sense.get_temp(), justification='center', key='sense_temp_out'),
-                  Qt.Button('Refresh', image_data=sensor_refresh, key='refresh_sense_temp', enable_events=True,
+                  Qt.Button('Refresh', image_data=self.icons.refresh, key='refresh_sense_temp', enable_events=True,
                             size=(36, 36))],
 
                 [ Qt.Text('Relative Humidity:', justification='left'),
                   Qt.Text(self.ada_sense.get_humidity(), justification='center', key='sense_hum_out'),
-                  Qt.Button('Refresh', image_data=sensor_refresh, key='refresh_sense_hum', enable_events=True, ) ],
+                  Qt.Button('Refresh', image_data=self.icons.refresh, key='refresh_sense_hum', enable_events=True, ) ],
 
                 [ Qt.Text('Barometric Pressure:', justification='left'),
                   Qt.Text(self.ada_sense.get_pressure(), justification='center', key='sense_pres_out'),
-                  Qt.Button('Refresh', image_data=sensor_refresh, key='refresh_sense_pres', enable_events=True, ) ]
+                  Qt.Button('Refresh', image_data=self.icons.refresh, key='refresh_sense_pres', enable_events=True, ) ]
                 ]
 
         return layout
@@ -52,8 +49,9 @@ class MainWindow(object):
         """
         layout = [
                 [ Qt.Frame('Sensor Information', layout=self.sense_frame_layout()) ],
-                [ Qt.Button('Quit', enable_events=True, key='quit_button', image_data=quit_icon),
-                  Qt.Button('Refresh All', enable_events=True, key='refresh_all_button', image_data=sensor_refresh) ]
+                [ Qt.Button('Quit', enable_events=True, key='quit_button', image_data=self.icons.quit),
+                  Qt.Button('Refresh All', enable_events=True, key='refresh_all_button',
+                            image_data=self.icons.refresh) ]
                 ]
 
         return layout
@@ -65,6 +63,10 @@ class MainWindow(object):
         Instantiate a new instance of MainWindow
 
         """
+
+        # Gather the name of the icon set we should be using. We will use this to search the icon set packages
+        icon_set_str = config['GUI_PREFS']['icon_set']
+        self.icons = import_icon_set(icon_set_str)
 
         # Create an instance-flag that can be toggled to False or True when this window is active or not respectively
         self.win_active = False
@@ -80,4 +82,5 @@ class MainWindow(object):
 
         Qt.theme(config['GUI_PREFS']['theme'])
 
-        self.window = Qt.Window('AdaHub Home', layout=self.main_layout())
+        self.window = Qt.Window('AdaHub Home', layout=self.main_layout(), no_titlebar=True, alpha_channel=0.8,
+                                grab_anywhere=True)
