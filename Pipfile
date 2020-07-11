@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+twine = "*"
+pipenv-setup = "*"
+
+[packages]
+sense-hat = "==2.2.0"
+inspy-logger = "==1.0.3"
+sense-emu = "==1.1"
+PySimpleGUIQt = "==0.35.0"
+e1839a8 = {editable = true,path = "."}
+ada-hub = {editable = true,path = "."}
+
+[requires]
+python_version = "3.8"
