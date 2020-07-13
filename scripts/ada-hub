@@ -20,6 +20,13 @@ get_logger = logging.getLogger
 
 
 def test_connection():
+    """
+
+    A function to check if there's network connectivity. Basically an abstract for
+
+    Returns:
+
+    """
     from ada_hub.lib.helpers.network import conn_test
 
     return conn_test()

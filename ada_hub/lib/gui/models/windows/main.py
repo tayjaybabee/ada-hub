@@ -8,6 +8,7 @@ from ada_hub.lib.gui.helpers import import_icon_set
 # Import Sense Hat interface
 from ada_hub.lib.ada_sense import AdaSense
 
+
 class MainWindow(object):
 
 
@@ -22,20 +23,24 @@ class MainWindow(object):
         """
         layout = [
                 [ Qt.Text('Temperature:', justification='left'),
-                  Qt.Text(self.ada_sense.get_temp(), justification='center', key='sense_temp_out'),
-                  Qt.Button('Refresh', image_data=self.icons.refresh, key='refresh_sense_temp', enable_events=True,
-                            size=(36, 36))],
+                  Qt.Text(self.ada_sense.get_temp(), justification='center', key='sense_temp_out', auto_size_text=True),
+                ],
 
                 [ Qt.Text('Relative Humidity:', justification='left'),
-                  Qt.Text(self.ada_sense.get_humidity(), justification='center', key='sense_hum_out'),
-                  Qt.Button('Refresh', image_data=self.icons.refresh, key='refresh_sense_hum', enable_events=True, ) ],
+                  Qt.Text(self.ada_sense.get_humidity(), justification='center', key='sense_hum_out') ],
 
                 [ Qt.Text('Barometric Pressure:', justification='left'),
                   Qt.Text(self.ada_sense.get_pressure(), justification='center', key='sense_pres_out'),
-                  Qt.Button('Refresh', image_data=self.icons.refresh, key='refresh_sense_pres', enable_events=True, ) ]
                 ]
+        ]
 
         return layout
+
+
+    def weather_frame(self):
+        layout = [
+                [Qt.Column('Weather for ')]
+                ]
 
 
     def main_layout(self):
@@ -48,10 +53,13 @@ class MainWindow(object):
 
         """
         layout = [
-                [ Qt.Frame('Sensor Information', layout=self.sense_frame_layout()) ],
-                [ Qt.Button('Quit', enable_events=True, key='quit_button', image_data=self.icons.quit),
-                  Qt.Button('Refresh All', enable_events=True, key='refresh_all_button',
-                            image_data=self.icons.refresh) ]
+                [ Qt.Frame('Sensor Information', layout=self.sense_frame_layout(), size=(450,450)) ],
+                [ Qt.Button('', enable_events=True, key='quit_button', image_data=self.icons.quit, tooltip='Quit',
+                            button_color=(Qt.theme_text_color(), Qt.theme_background_color()), border_width=0 ),
+                  Qt.Button('', enable_events=True, key='refresh_all_button', tooltip='Refresh All',
+                            image_data=self.icons.refresh, border_width=0,
+                            button_color=(Qt.theme_text_color(), Qt.theme_background_color()))
+                  ]
                 ]
 
         return layout
@@ -83,4 +91,4 @@ class MainWindow(object):
         Qt.theme(config['GUI_PREFS']['theme'])
 
         self.window = Qt.Window('AdaHub Home', layout=self.main_layout(), no_titlebar=True, alpha_channel=0.8,
-                                grab_anywhere=True)
+                                grab_anywhere=True, size=(500,500))
