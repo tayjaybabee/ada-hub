@@ -32,5 +32,5 @@ jobs:
     - name: Generate changelog
       uses: heinrichreimer/action-github-changelog-generator@v2.1.1
     with:
-      token: ${{ secrets.GITHUB_TOKEN }}
+      token: ${{ secrets.GIT_TOKEN }}
 
