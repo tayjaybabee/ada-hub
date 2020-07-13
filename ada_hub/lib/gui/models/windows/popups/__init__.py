@@ -70,7 +70,7 @@ def continue_anyway(issue):
             []
             ]
 
-    window = Qt.Window('Continue Anyway?', layout=layout)
+    window = Qt.Window('Continue Anyway?', layout=main_layout)
 
 
     while True:
