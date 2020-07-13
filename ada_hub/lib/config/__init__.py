@@ -71,7 +71,7 @@ class AdaHubConfig(object):
 
         return conf
 
-    def __init__(self, path_to_config=None):
+    def __init__(self, args):
         # Import directly
         import os
 
