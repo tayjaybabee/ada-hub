@@ -1,3 +1,4 @@
+![Python application](https://github.com/tayjaybabee/ada-hub/workflows/Python%20application/badge.svg?branch=master)
 
 ```shell
 
