@@ -81,6 +81,8 @@ class AdaHubConfig(object):
         # From * local imports
         self.default_data_root = DEFAULT_DATA_ROOT
 
+        path_to_config = self.default_data_root
+
         # Start a logger
         self.log_name = f'{PROG}.AdaHubConfig'
         log = getLogger(self.log_name)
