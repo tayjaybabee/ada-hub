@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.1a1](https://github.com/tayjaybabee/ada-hub/tree/1.0.1a1) (2020-07-13)
+
+[Full Changelog](https://github.com/tayjaybabee/ada-hub/compare/v1.0a1.1.2...1.0.1a1)
+
 ## [v1.0a1.1.2](https://github.com/tayjaybabee/ada-hub/tree/v1.0a1.1.2) (2020-06-20)
 
 [Full Changelog](https://github.com/tayjaybabee/ada-hub/compare/v1.0a1.0.2...v1.0a1.1.2)

@@ -128,4 +128,5 @@ class AdaHubConfig(object):
 
             log.debug(f'Sections in config: {self.config.sections()}')
 
-
+# Author: Taylor-Jayde Blackstone <t.blackstone@inspyre.tech>
+# Since: Version 1.0
