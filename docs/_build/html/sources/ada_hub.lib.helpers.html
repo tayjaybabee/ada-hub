@@ -1,0 +1,496 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ada_hub.lib.helpers package &mdash; AdaHub 1.0-a1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> AdaHub
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../cmd.html">Command line utilities</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AdaHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>ada_hub.lib.helpers package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sources/ada_hub.lib.helpers.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ada-hub-lib-helpers-package">
+<h1>ada_hub.lib.helpers package<a class="headerlink" href="#ada-hub-lib-helpers-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ada_hub.lib.helpers.credits">
+<span id="ada-hub-lib-helpers-credits-module"></span><h2>ada_hub.lib.helpers.credits module<a class="headerlink" href="#module-ada_hub.lib.helpers.credits" title="Permalink to this headline">¶</a></h2>
+<p>A module for the AdaHub.lib.helpers package that contains functions to print out the credits</p>
+<dl class="py exception">
+<dt id="ada_hub.lib.helpers.credits.CreditsError">
+<em class="property">exception </em><code class="sig-prename descclassname">ada_hub.lib.helpers.credits.</code><code class="sig-name descname">CreditsError</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/credits.html#CreditsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.credits.CreditsError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="ada_hub.lib.helpers.credits.NoCreditsFileError">
+<em class="property">exception </em><code class="sig-prename descclassname">ada_hub.lib.helpers.credits.</code><code class="sig-name descname">NoCreditsFileError</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/credits.html#NoCreditsFileError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.credits.NoCreditsFileError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ada_hub.lib.helpers.credits.CreditsError" title="ada_hub.lib.helpers.credits.CreditsError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ada_hub.lib.helpers.credits.CreditsError</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.credits.third_party">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.credits.</code><code class="sig-name descname">third_party</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/credits.html#third_party"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.credits.third_party" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ada_hub.lib.helpers.debug">
+<span id="ada-hub-lib-helpers-debug-module"></span><h2>ada_hub.lib.helpers.debug module<a class="headerlink" href="#module-ada_hub.lib.helpers.debug" title="Permalink to this headline">¶</a></h2>
+<p>A module containing various functions that assist in debugging.</p>
+<dl class="py class">
+<dt id="ada_hub.lib.helpers.debug.ArgumentConflictError">
+<em class="property">class </em><code class="sig-prename descclassname">ada_hub.lib.helpers.debug.</code><code class="sig-name descname">ArgumentConflictError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/debug.html#ArgumentConflictError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.debug.ArgumentConflictError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ada_hub.lib.helpers.debug.ReadoutError" title="ada_hub.lib.helpers.debug.ReadoutError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ada_hub.lib.helpers.debug.ReadoutError</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="ada_hub.lib.helpers.debug.ReadoutError">
+<em class="property">class </em><code class="sig-prename descclassname">ada_hub.lib.helpers.debug.</code><code class="sig-name descname">ReadoutError</code><a class="reference internal" href="../_modules/ada_hub/lib/helpers/debug.html#ReadoutError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.debug.ReadoutError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.debug.conf_sect_readout">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.debug.</code><code class="sig-name descname">conf_sect_readout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">target_section</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sep_str</span><span class="o">=</span><span class="default_value">'|'</span></em>, <em class="sig-param"><span class="n">no_strip</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">pad_size</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">pad_str</span><span class="o">=</span><span class="default_value">' '</span></em>, <em class="sig-param"><span class="n">no_pad</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">leave_sep_str_alone</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">plain_sep</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/debug.html#conf_sect_readout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.debug.conf_sect_readout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide this function with a ConfigParser object, and the section you’d like to read-out (and other desired
+parameter arguments) and it will return a string assembled from the key and value returned from each parameter
+defined in that configuration section.</p>
+<dl class="simple">
+<dt>Example of Returned String:</dt><dd><p>theme: DarkAmber | icon_set: sketch | grab_anywhere: False</p>
+</dd>
+</dl>
+<p>Below is a brief description of each of the parameters this function has available to manipulate and what effect
+doing so would have (standard documentation argument section). However, there are a few parameters I’d like to
+make special remarks about:</p>
+<blockquote>
+<div><dl>
+<dt>sep_str: This argument is not required. If you don’t provide a value for this argument it will default to ‘|’.</dt><dd><dl class="simple">
+<dt>NOTE:</dt><dd><p>It’s important to understand what happens to the value you provide this argument as the function</p>
+</dd>
+</dl>
+<p>will manipulate it as soon as it starts operation.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>How Does It Change?</dt><dd><p>The ‘strip’ function is called on the string object to eliminate any preceding or trailing
+whitespace. This is done to ensure we don’t result with a malformed separator after the desired
+padding is applied by this function.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>object</em>) – A ConfigParser type object that contains the section you’d like to readout</p></li>
+<li><p><strong>target_section</strong> (<em>str</em>) – A string that is equal to the name of the section you’d like to readout</p></li>
+<li><p><strong>sep_str</strong> (<em>str</em>) – A string that is equal to what should sit between the padding in the separator string between
+resulting entry value pairs</p></li>
+<li><p><strong>no_strip</strong> (<em>bool</em>) – (Defaults to False) Do not strip preceding or trailing whitespace</p></li>
+<li><p><strong>pad_size</strong> (<em>int</em>) – (Defaults to 1) How many times should pad_str (by default: ‘ ‘) be repeated on each side of the
+separator string?</p></li>
+<li><p><strong>pad_str</strong> (<em>str</em>) – (Defaults to ‘ ‘) Replace the default pad character (a single whitespace) with whatever string
+you desire</p></li>
+<li><p><strong>no_pad</strong> (<em>bool</em>) – <p>Do not pad the separation character. This will result in any arguments provided to pad_size,
+and pad_str will be ignored and no padding will surround the ‘key: value’ pair</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Using this argument and not also using ‘no_strip = True’ will still result in your input
+being stripped.</p></li>
+<li><p>Using this argument does not ensure that there will be a lack of whitespace after the
+separator string as the program will insert a single whitespace to ensure readability. You
+can override this behavior by simple giving a value of True to the ‘leave_sep_str_alone”
+flag instead of using ‘no_pad’</p></li>
+</ol>
+</div>
+</p></li>
+<li><p><strong>leave_sep_str_alone</strong> (<em>bool</em>) – <p>Make no modifications to the separator.
+.. note:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Changing</span> <span class="n">this</span> <span class="kn">from</span> <span class="nn">it</span><span class="s1">&#39;s default value will result in the following arguments</span>
+<span class="n">being</span> <span class="n">ignored</span><span class="p">:</span>
+
+<span class="o">*</span> <span class="n">pad_size</span>
+<span class="o">*</span> <span class="n">pad_str</span>
+
+<span class="n">This</span> <span class="n">argument</span> <span class="n">conflicts</span> <span class="k">with</span> <span class="s1">&#39;plain_sep&#39;</span> <span class="n">using</span> <span class="n">both</span> <span class="n">arguments</span> <span class="n">will</span> <span class="n">result</span> <span class="ow">in</span>
+<span class="n">a</span> <span class="n">ConflictingArgumentsError</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><strong>plain_sep</strong> (<em>bool</em>) – <p>If True; the separator between ‘key: value’ pairs will simply be ‘, ‘</p>
+<dl class="simple">
+<dt>For Example:</dt><dd><p>’icon_set: sketch, theme: DarkAmber, grab_anywhere: False’</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Changing this from it’s default value will result in the following arguments being
+ignored:</p>
+<ul>
+<li><p>no_strip</p></li>
+<li><p>sep_str</p></li>
+<li><p>no_pad</p></li>
+<li><p>pad_size</p></li>
+<li><p>pad_str</p></li>
+</ul>
+</div>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A string that consists of all the keys and their values that can be found in the target section of the</dt><dd><p>provided config object</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.debug.format_members">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.debug.</code><code class="sig-name descname">format_members</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dir_res</span></em>, <em class="sig-param"><span class="n">inc_priv</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/debug.html#format_members"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.debug.format_members" title="Permalink to this definition">¶</a></dt>
+<dd><p>A module to get a sorted, formatted list of the requesters members</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inc_priv</strong> (<em>bool</em>) – Should this function include exposed private members in it’s returned tuple?</p></li>
+<li><p><strong>dir_res</strong> (<em>list</em>) – The list the caller receives after calling ‘dir()’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns a list of requesters members. Optionally, does not filter private members</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ada_hub.lib.helpers.network">
+<span id="ada-hub-lib-helpers-network-module"></span><h2>ada_hub.lib.helpers.network module<a class="headerlink" href="#module-ada_hub.lib.helpers.network" title="Permalink to this headline">¶</a></h2>
+<p>A module as part of the AdaHub.lib.helpers package that contains functions pertaining to network status,
+connectivity, etc</p>
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.network.backup_test">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.network.</code><code class="sig-name descname">backup_test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/network.html#backup_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.network.backup_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method to really figure out if there’s no connection to the outside network. Basically pings <a class="reference external" href="https://inspyre.tech">https://inspyre.tech</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Were we able to ping <a class="reference external" href="https://inspyre.tech">https://inspyre.tech</a>? True for yes, False for no</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.network.conn_test">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.network.</code><code class="sig-name descname">conn_test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/network.html#conn_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.network.conn_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to check if there’s an internet connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Is there an internet connection? True if yes, False if no.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ada_hub.lib.helpers.pid">
+<span id="ada-hub-lib-helpers-pid-module"></span><h2>ada_hub.lib.helpers.pid module<a class="headerlink" href="#module-ada_hub.lib.helpers.pid" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.pid.remove_pid">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.pid.</code><code class="sig-name descname">remove_pid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/pid.html#remove_pid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.pid.remove_pid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that removes the PID file from the file-system.</p>
+<p>NOTE: It is best practice to only use this function when you know what you’re doing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.pid.write_pid">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.pid.</code><code class="sig-name descname">write_pid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">inc_run_dir</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/pid.html#write_pid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.pid.write_pid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that writes our PID to a file (by default $USER_DIR/Inspyre-Softworks/AdaHub/run/PID) for easy access
+during runtime.</p>
+<p>For example; if the program is un-responsive but you still have control over other applications in your system
+you can run:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>(</strong><strong>)</strong> (<em>inc_run_dir</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ada_hub.lib.helpers.system">
+<span id="ada-hub-lib-helpers-system-module"></span><h2>ada_hub.lib.helpers.system module<a class="headerlink" href="#module-ada_hub.lib.helpers.system" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.system.get_os_family">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.system.</code><code class="sig-name descname">get_os_family</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/system.html#get_os_family"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.system.get_os_family" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the line of operating systems that the current environment was?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>What will be returned will be one of the following: windows, linux, mac</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.system.gui_capable">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.system.</code><code class="sig-name descname">gui_capable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/system.html#gui_capable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.system.gui_capable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the current environment able to produce a graphical user interface on-demand?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Is the system GUI-capable? True for yes, False for no</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ada_hub.lib.helpers.system.x_is_running">
+<code class="sig-prename descclassname">ada_hub.lib.helpers.system.</code><code class="sig-name descname">x_is_running</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ada_hub/lib/helpers/system.html#x_is_running"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ada_hub.lib.helpers.system.x_is_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are in a Unix environment this will check if XServer is installed in your environment. Will return a boolean.</p>
+<p>_A Note About <a href="#id1"><span class="problematic" id="id2">Methodology_</span></a>:</p>
+<blockquote>
+<div><dl>
+<dt><em>xset</em>:</dt><dd><p>If you’re running a linux environment and using certain (graphically oriented) features of this program (
+i.e. the SenseHat emulator) the program will need to check if you are indeed capable of sup0porting such
+features.</p>
+<p>The method by which I determine your ability to support even the most basic of graphical elements of this
+program is to assess the availability of xserver on your system, or more specifically; it’s presence (
+namely it’s executables) in your PATH. Xset is the command that I utilize to determine GUI capability of
+the host system.</p>
+<p>The unix command ‘xset’ comes with x11-xserver-utils command and just allows one to either query it for
+configuration information or set options. We’re going to call xset with the ‘-q’ flag which simply prints
+out the status of xserver and quits. This is preferred as it makes no changes to the system and is of
+minimal resource drain if xserver is installed.</p>
+</dd>
+</dl>
+<p><em>The More You Know</em></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Is XServer present? True is yes, False is no.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ada_hub.lib.helpers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ada_hub.lib.helpers" title="Permalink to this headline">¶</a></h2>
+<p>A package containing a few tools to help the main code.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taylor-Jayde Blackstone
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

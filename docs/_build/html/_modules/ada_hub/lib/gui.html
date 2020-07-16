@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ada_hub.lib.gui &mdash; AdaHub 1.0-a1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> AdaHub
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cmd.html">Command line utilities</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AdaHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../ada_hub.html">ada_hub</a> &raquo;</li>
+        
+      <li>ada_hub.lib.gui</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ada_hub.lib.gui</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ada_hub.lib.constants</span> <span class="kn">import</span> <span class="n">PROG</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.config</span> <span class="kn">import</span> <span class="n">write_config</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.helpers.debug</span> <span class="kn">import</span> <span class="n">format_members</span>
+
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
+
+
+<div class="viewcode-block" id="GUIConfig"><a class="viewcode-back" href="../../../sources/ada_hub.lib.gui.html#ada_hub.lib.gui.GUIConfig">[docs]</a><span class="k">class</span> <span class="nc">GUIConfig</span><span class="p">:</span>
+
+<div class="viewcode-block" id="GUIConfig.merge_default_config"><a class="viewcode-back" href="../../../sources/ada_hub.lib.gui.html#ada_hub.lib.gui.GUIConfig.merge_default_config">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">merge_default_config</span><span class="p">(</span><span class="n">prog_conf</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Take a configuration structure and add the GUI_PREFS section to it, as well as some basic/default options.</span>
+<span class="sd">        After setting the options the function will then return your modified configuration object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            prog_conf (object):  A ConfigParser object that has been previously loaded from the disk or assembled.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            object: The same config that was passed to prog_conf is returned after GUI settings are added.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Add our section</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Add our basic configuration structure</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">,</span> <span class="s1">&#39;theme&#39;</span><span class="p">,</span> <span class="s1">&#39;DarkAmber&#39;</span><span class="p">)</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">,</span> <span class="s1">&#39;icon_set&#39;</span><span class="p">,</span> <span class="s1">&#39;sketch&#39;</span><span class="p">)</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">,</span> <span class="s1">&#39;grab_anywhere&#39;</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">)</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">,</span> <span class="s1">&#39;advanced_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Return the modified configuration object</span>
+        <span class="k">return</span> <span class="n">prog_conf</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Start a new instance of GUIConfig.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (object): A ConfigParser object that&#39;s been previously assembled or loaded from the disk</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Grab the configuration file&#39;s path from the provided configuration object.</span>
+        <span class="n">conf_filepath</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;RUNTIME&#39;</span><span class="p">][</span><span class="s1">&#39;conf_file_path&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Start a logger with an appropriate, descriptive name</span>
+        <span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.GUIConfig&#39;</span><span class="p">)</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+
+        <span class="n">section</span> <span class="o">=</span> <span class="s1">&#39;GUI_PREFS&#39;</span>
+
+        <span class="c1"># Analyze the configuration object&#39;s sections to see if &#39;GUI_PREFS&#39; is among them. If it&#39;s not,</span>
+        <span class="c1"># we will send our configuration object off to &quot;merge_default_config&quot; to be modified appropriately.</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Looking for &quot;GUI_PREFS&quot; section in configuration&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">section</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;The configuration does not contain a &quot;GUI_PREFS&quot; section. Creating!&#39;</span><span class="p">)</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_default_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received the modified configuration object. With these sections: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Writing modified configuration to disk.&#39;</span><span class="p">)</span>
+            <span class="n">write_config</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">conf_filepath</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Config written!&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Go ahead and assign the config to an aptly named attribute</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initialized GUI config in the following state: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">[</span><span class="s2">&quot;GUI_PREFS&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GUIApp"><a class="viewcode-back" href="../../../sources/ada_hub.lib.gui.html#ada_hub.lib.gui.GUIApp">[docs]</a><span class="k">class</span> <span class="nc">GUIApp</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">arg_parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Initialize a new instance of GUIApp, load configuration for the GUI</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (object): ConfigParser object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">ada_hub.lib.ada_sense</span> <span class="kn">import</span> <span class="n">AdaSense</span>
+        <span class="kn">from</span> <span class="nn">ada_hub.lib.gui.models.windows.main</span> <span class="kn">import</span> <span class="n">MainWindow</span>
+        <span class="kn">from</span> <span class="nn">ada_hub</span> <span class="kn">import</span> <span class="n">clean_exit</span>
+
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.Application.GUI&#39;</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Loading main GUI application window.&#39;</span><span class="p">)</span>
+        <span class="c1"># Instantiate an instance of MainWindow which is the main window for the AdaHub application.</span>
+        <span class="n">main_win</span> <span class="o">=</span> <span class="n">MainWindow</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="c1"># Assign the new instance of MainWindow to an attribute that&#39;s appropriately named</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span> <span class="o">=</span> <span class="n">main_win</span><span class="o">.</span><span class="n">window</span>
+
+        <span class="c1"># Extract the theme indicated by the configuration to an aptly named attribute</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">][</span><span class="s1">&#39;theme&#39;</span><span class="p">]</span>
+        <span class="n">icon_set_str</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">][</span><span class="s1">&#39;icon_set&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Set up a flag that will be used to indicate the running status of this window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_active</span> <span class="o">=</span> <span class="n">main_win</span><span class="o">.</span><span class="n">win_active</span>
+
+        <span class="c1"># If this window is already active don&#39;t spawn another one</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_active</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Switch the &#39;main_active&#39; flag to True to prevent any possibility of window spawn abuse/accidents/bugs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_active</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Load the sensor and LED matrices and their associated hardware and drivers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sense_hat</span> <span class="o">=</span><span class="n">AdaSense</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="c1"># Start a while loop (which will be our main loop) to run the &#39;MainWindow&#39;</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_active</span><span class="p">:</span>
+
+            <span class="c1"># Grab the event stream, and values of fields.</span>
+            <span class="c1"># Call the &#39;read&#39; function on the main window, and have it check back in 100 times a second</span>
+            <span class="n">event</span><span class="p">,</span> <span class="n">vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+            <span class="c1"># If we receive an indication that the user pressed either the &#39;X&#39; or &#39;Close&#39; buttons we close the window</span>
+            <span class="c1"># and set the &#39;main_active&#39; flag to False.</span>
+            <span class="k">if</span> <span class="n">event</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;quit_button&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_active</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># If the user presses the &#39;refresh all&#39; button within the sensor reading frame, we refresh all sensor</span>
+            <span class="c1"># fields.</span>
+            <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;refresh_all_button&#39;</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received request to refresh all values in the Sensor info frame&#39;</span><span class="p">)</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Updating temperature&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">[</span><span class="s1">&#39;sense_temp_out&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sense_hat</span><span class="o">.</span><span class="n">get_temp</span><span class="p">())</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Updating pressure&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">[</span><span class="s1">&#39;sense_pres_out&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sense_hat</span><span class="o">.</span><span class="n">get_pressure</span><span class="p">())</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Updating humidity&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">[</span><span class="s1">&#39;sense_hum_out&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sense_hat</span><span class="o">.</span><span class="n">get_humidity</span><span class="p">())</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Refreshing window!&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+            <span class="c1"># If the user presses the refresh button in the row associated with the temperature sensor, we&#39;ll refresh</span>
+            <span class="c1"># that reading</span>
+            <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;refresh_sense_temp&#39;</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;User pressed &quot;refresh_temp button&quot;&#39;</span><span class="p">)</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Updating temperature&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">[</span><span class="s1">&#39;sense_temp_out&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sense_hat</span><span class="o">.</span><span class="n">get_temp</span><span class="p">())</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Refreshing window!&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+            <span class="c1"># If the user presses the refresh button in the row associated with the humidity sensor, we&#39;ll refresh</span>
+            <span class="c1"># that reading</span>
+            <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;refresh_sense_hum&#39;</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;User pressed button to refresh humidity reading&#39;</span><span class="p">)</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Updating humidity&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">[</span><span class="s1">&#39;sense_hum_out&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sense_hat</span><span class="o">.</span><span class="n">get_humidity</span><span class="p">())</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Refreshing window!&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+            <span class="c1"># If the user presses the refresh button in the row associated with the pressure sensor, we&#39;ll refresh</span>
+            <span class="c1"># that reading</span>
+            <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;refresh_sense_pres&#39;</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;User pressed button to refresh pressure reading&#39;</span><span class="p">)</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Updating barometric pressure&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">[</span><span class="s1">&#39;sense_pres_out&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sense_hat</span><span class="o">.</span><span class="n">get_pressure</span><span class="p">())</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Refreshing window!&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+        <span class="c1"># Exit the program cleanly</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_active</span><span class="p">:</span>
+            <span class="n">clean_exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<span class="n">m_log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span> <span class="n">PROG</span> <span class="si">}</span><span class="s1">.GUI&#39;</span><span class="p">)</span>
+<span class="n">m_log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">m_log_name</span><span class="p">)</span>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taylor-Jayde Blackstone
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

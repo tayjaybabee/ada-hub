@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ada_hub.lib.helpers.debug &mdash; AdaHub 1.0-a1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> AdaHub
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cmd.html">Command line utilities</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">AdaHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../ada_hub.html">ada_hub</a> &raquo;</li>
+        
+      <li>ada_hub.lib.helpers.debug</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ada_hub.lib.helpers.debug</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">A module containing various functions that assist in debugging.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.constants</span> <span class="kn">import</span> <span class="n">PROG</span>
+
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+
+
+<div class="viewcode-block" id="ReadoutError"><a class="viewcode-back" href="../../../../sources/ada_hub.lib.helpers.html#ada_hub.lib.helpers.debug.ReadoutError">[docs]</a><span class="k">class</span> <span class="nc">ReadoutError</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ArgumentConflictError"><a class="viewcode-back" href="../../../../sources/ada_hub.lib.helpers.html#ada_hub.lib.helpers.debug.ArgumentConflictError">[docs]</a><span class="k">class</span> <span class="nc">ArgumentConflictError</span><span class="p">(</span><span class="n">ReadoutError</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;There has been an unknown conflict of argument values. This is usually caused when one &#39;</span> \
+                           <span class="s1">&#39;changes two (or more) mutually exclusive arguments. Please see documentation.&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span></div>
+
+
+<div class="viewcode-block" id="format_members"><a class="viewcode-back" href="../../../../sources/ada_hub.lib.helpers.html#ada_hub.lib.helpers.debug.format_members">[docs]</a><span class="k">def</span> <span class="nf">format_members</span><span class="p">(</span><span class="n">dir_res</span><span class="p">,</span> <span class="n">inc_priv</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    A module to get a sorted, formatted list of the requesters members</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        inc_priv (bool): Should this function include exposed private members in it&#39;s returned tuple?</span>
+<span class="sd">        dir_res (list): The list the caller receives after calling &#39;dir()&#39;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple: Returns a list of requesters members. Optionally, does not filter private members</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Prepare an empty list to transfer the received member names to after manipulating it appropriately</span>
+    <span class="n">member_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Iterate through the received member list</span>
+    <span class="c1">#   - If we are not including private members in our return we will refrain from adding members that start with</span>
+    <span class="c1">#     &#39;__&#39; to the end-result</span>
+    <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">dir_res</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inc_priv</span> <span class="ow">and</span> <span class="n">member</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">member_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+
+    <span class="n">member_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+    <span class="n">mem_list_str</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">member_list</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">member_list</span><span class="p">,</span> <span class="n">mem_list_str</span></div>
+
+
+<div class="viewcode-block" id="conf_sect_readout"><a class="viewcode-back" href="../../../../sources/ada_hub.lib.helpers.html#ada_hub.lib.helpers.debug.conf_sect_readout">[docs]</a><span class="k">def</span> <span class="nf">conf_sect_readout</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">target_section</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sep_str</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">no_strip</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pad_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad_str</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+                      <span class="n">no_pad</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">leave_sep_str_alone</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plain_sep</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Provide this function with a ConfigParser object, and the section you&#39;d like to read-out (and other desired</span>
+<span class="sd">    parameter arguments) and it will return a string assembled from the key and value returned from each parameter</span>
+<span class="sd">    defined in that configuration section.</span>
+
+<span class="sd">    Example of Returned String:</span>
+<span class="sd">        theme: DarkAmber | icon_set: sketch | grab_anywhere: False</span>
+
+<span class="sd">    Below is a brief description of each of the parameters this function has available to manipulate and what effect</span>
+<span class="sd">    doing so would have (standard documentation argument section). However, there are a few parameters I&#39;d like to</span>
+<span class="sd">    make special remarks about:</span>
+
+<span class="sd">        sep_str: This argument is not required. If you don&#39;t provide a value for this argument it will default to &#39;|&#39;.</span>
+<span class="sd">            NOTE:</span>
+<span class="sd">                It&#39;s important to understand what happens to the value you provide this argument as the function</span>
+<span class="sd">            will manipulate it as soon as it starts operation.</span>
+
+<span class="sd">                How Does It Change?</span>
+<span class="sd">                    The &#39;strip&#39; function is called on the string object to eliminate any preceding or trailing</span>
+<span class="sd">                    whitespace. This is done to ensure we don&#39;t result with a malformed separator after the desired</span>
+<span class="sd">                    padding is applied by this function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (object): A ConfigParser type object that contains the section you&#39;d like to readout</span>
+
+<span class="sd">        target_section (str): A string that is equal to the name of the section you&#39;d like to readout</span>
+
+<span class="sd">        sep_str (str): A string that is equal to what should sit between the padding in the separator string between</span>
+<span class="sd">                       resulting entry value pairs</span>
+
+<span class="sd">        no_strip (bool): (Defaults to False) Do not strip preceding or trailing whitespace</span>
+
+<span class="sd">        pad_size (int): (Defaults to 1) How many times should pad_str (by default: &#39; &#39;) be repeated on each side of the</span>
+<span class="sd">                        separator string?</span>
+
+<span class="sd">        pad_str (str): (Defaults to &#39; &#39;) Replace the default pad character (a single whitespace) with whatever string</span>
+<span class="sd">                    you desire</span>
+
+<span class="sd">        no_pad (bool): Do not pad the separation character. This will result in any arguments provided to pad_size,</span>
+<span class="sd">                       and pad_str will be ignored and no padding will surround the &#39;key: value&#39; pair</span>
+
+<span class="sd">                       NOTE:</span>
+<span class="sd">                           1. Using this argument and not also using &#39;no_strip = True&#39; will still result in your input</span>
+<span class="sd">                              being stripped.</span>
+
+<span class="sd">                           2. Using this argument does not ensure that there will be a lack of whitespace after the</span>
+<span class="sd">                              separator string as the program will insert a single whitespace to ensure readability. You</span>
+<span class="sd">                              can override this behavior by simple giving a value of True to the &#39;leave_sep_str_alone&quot;</span>
+<span class="sd">                              flag instead of using &#39;no_pad&#39;</span>
+
+
+<span class="sd">        leave_sep_str_alone (bool): Make no modifications to the separator.</span>
+<span class="sd">                                    NOTE:</span>
+<span class="sd">                                        Changing this from it&#39;s default value will result in the following arguments</span>
+<span class="sd">                                        being ignored:</span>
+
+<span class="sd">                                        * pad_size</span>
+<span class="sd">                                        * pad_str</span>
+
+<span class="sd">                                        This argument conflicts with &#39;plain_sep&#39; using both arguments will result in</span>
+<span class="sd">                                        a ConflictingArgumentsError</span>
+
+<span class="sd">        plain_sep (bool): If True; the separator between &#39;key: value&#39; pairs will simply be &#39;, &#39;</span>
+
+<span class="sd">                          For Example:</span>
+<span class="sd">                            &#39;icon_set: sketch, theme: DarkAmber, grab_anywhere: False&#39;</span>
+
+<span class="sd">                          NOTE:</span>
+<span class="sd">                               Changing this from it&#39;s default value will result in the following arguments being</span>
+<span class="sd">                               ignored:</span>
+
+<span class="sd">                               * no_strip</span>
+<span class="sd">                               * sep_str</span>
+<span class="sd">                               * no_pad</span>
+<span class="sd">                               * pad_size</span>
+<span class="sd">                               * pad_str</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: A string that consists of all the keys and their values that can be found in the target section of the</span>
+<span class="sd">             provided config object</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">PROG</span> <span class="o">+</span> <span class="s1">&#39;.conf_sect_readout&#39;</span><span class="p">)</span>
+
+
+    <span class="k">if</span> <span class="n">leave_sep_str_alone</span> <span class="ow">and</span> <span class="n">plain_sep</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentConflictError</span><span class="p">(</span><span class="s1">&#39;Conflicting arguments detected: leave_sep_str_alone and plain_sep. &#39;</span>
+                                        <span class="s1">&#39;These two can not coexist&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ArgumentConflictError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">plain_sep</span><span class="p">:</span>
+        <span class="c1"># If we&#39;ve been denied permission to do any modifications to the provided sep_str we fill the final &#39;sep&#39;</span>
+        <span class="c1"># variable with the provided sep_str without touching it</span>
+        <span class="k">if</span> <span class="n">leave_sep_str_alone</span><span class="p">:</span>
+            <span class="n">sep</span> <span class="o">=</span> <span class="n">sep_str</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c1"># If we have permission (which is the default) to strip the incoming sep_str, we do that and assign the</span>
+            <span class="c1"># result to the &#39;sep&#39; variable</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">no_strip</span><span class="p">:</span>
+                <span class="n">sep</span> <span class="o">=</span> <span class="n">sep_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="c1"># If we were told to leave the separator string alone we just make the value of &#39;sep&#39; whatever is</span>
+                <span class="c1"># provided by the sep_str argument</span>
+                <span class="n">sep</span> <span class="o">=</span> <span class="n">sep_str</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">no_pad</span><span class="p">:</span>
+                <span class="n">pad1</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pad_str</span> <span class="o">*</span> <span class="n">pad_size</span><span class="p">)</span>
+                <span class="n">pad2</span> <span class="o">=</span> <span class="n">pad1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pad1</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="n">pad2</span> <span class="o">=</span> <span class="n">pad1</span>
+
+            <span class="n">seperator</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pad1</span><span class="si">}{</span><span class="n">sep</span><span class="si">}{</span><span class="n">pad2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">seperator</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span>
+
+    <span class="c1"># Using the result of the above instruction as our pad string (so a copy on each side) we assemble a proper</span>
+    <span class="c1"># separator string</span>
+    <span class="n">separator</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pad1</span><span class="si">}{</span><span class="n">sep</span><span class="si">}{</span><span class="n">pad2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Declare a variable that contains an empty list to append to in the next block.</span>
+    <span class="n">key_value_pair_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Iterate over the target section of the provided config object capturing each key, and it&#39;s value which we then</span>
+    <span class="c1"># concatenate into a string to be added as an entry to the key_value_pair_list and then append it.</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="n">target_section</span><span class="p">]:</span>
+
+        <span class="c1"># Our string will look like this:</span>
+        <span class="c1">#   SETTING: PARAM</span>
+        <span class="c1">#</span>
+        <span class="c1">#   For Example:</span>
+        <span class="c1">#       theme: DarkAmber</span>
+        <span class="n">f_pair</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Append our concatenated string to the key_value_pair_list list</span>
+        <span class="n">key_value_pair_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_pair</span><span class="p">)</span>
+
+    <span class="c1"># Finally, return a string to the caller that is the result of joining the entries in our key_value_pair_list</span>
+    <span class="c1"># using the provided or default string as our separator.</span>
+    <span class="c1">#</span>
+    <span class="c1"># For Example:</span>
+    <span class="c1">#   icon_set: sketch | theme</span>
+    <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">key_value_pair_list</span><span class="p">)</span></div>
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taylor-Jayde Blackstone
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ada_hub.lib.helpers.system &mdash; AdaHub 1.0-a1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> AdaHub
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cmd.html">Command line utilities</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">AdaHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../ada_hub.html">ada_hub</a> &raquo;</li>
+        
+      <li>ada_hub.lib.helpers.system</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ada_hub.lib.helpers.system</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+
+<span class="kn">from</span> <span class="nn">ada_hub.lib.constants</span> <span class="kn">import</span> <span class="n">PROG</span><span class="p">,</span> <span class="n">ISSUE_URL</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.helpers.debug</span> <span class="kn">import</span> <span class="n">format_members</span>
+
+<span class="c1"># Create a logger for the module as a whole. This is mainly to track import flow.</span>
+<span class="n">m_log_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.Helpers.System&#39;</span>
+<span class="n">m_log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">m_log_name</span><span class="p">)</span>
+
+<span class="c1"># If running verbosely let&#39;s announce that we&#39;ve been imported</span>
+<span class="n">m_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Imported </span><span class="si">{</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">! (</span><span class="si">{</span><span class="vm">__file__</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Set up \\</span>
+<span class="n">members</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">()</span>
+<span class="n">members</span> <span class="o">=</span> <span class="n">format_members</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="n">mem_str</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">mem_list</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">m_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;I bring the following members: </span><span class="si">{</span><span class="n">mem_str</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="x_is_running"><a class="viewcode-back" href="../../../../sources/ada_hub.lib.helpers.html#ada_hub.lib.helpers.system.x_is_running">[docs]</a><span class="k">def</span> <span class="nf">x_is_running</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    If you are in a Unix environment this will check if XServer is installed in your environment. Will return a boolean.</span>
+
+<span class="sd">    _A Note About Methodology_:</span>
+
+<span class="sd">        *xset*:</span>
+<span class="sd">            If you&#39;re running a linux environment and using certain (graphically oriented) features of this program (</span>
+<span class="sd">            i.e. the SenseHat emulator) the program will need to check if you are indeed capable of sup0porting such</span>
+<span class="sd">            features.</span>
+
+<span class="sd">            The method by which I determine your ability to support even the most basic of graphical elements of this</span>
+<span class="sd">            program is to assess the availability of xserver on your system, or more specifically; it&#39;s presence (</span>
+<span class="sd">            namely it&#39;s executables) in your PATH. Xset is the command that I utilize to determine GUI capability of</span>
+<span class="sd">            the host system.</span>
+
+<span class="sd">            The unix command &#39;xset&#39; comes with x11-xserver-utils command and just allows one to either query it for</span>
+<span class="sd">            configuration information or set options. We&#39;re going to call xset with the &#39;-q&#39; flag which simply prints</span>
+<span class="sd">            out the status of xserver and quits. This is preferred as it makes no changes to the system and is of</span>
+<span class="sd">            minimal resource drain if xserver is installed.</span>
+
+<span class="sd">        *The More You Know*</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Is XServer present? True is yes, False is no.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s2">&quot;xset&quot;</span><span class="p">,</span> <span class="s2">&quot;-q&quot;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+
+    <span class="c1"># Open our Pipe instance</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+    <span class="c1"># The call to the returncode, comparing it to a clear exit code of zero. If it fails to match; the return will be</span>
+    <span class="c1"># False, otherwise the return will be True which should signal OK</span>
+    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+    <span class="c1"># END</span>
+
+
+<div class="viewcode-block" id="get_os_family"><a class="viewcode-back" href="../../../../sources/ada_hub.lib.helpers.html#ada_hub.lib.helpers.system.get_os_family">[docs]</a><span class="k">def</span> <span class="nf">get_os_family</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Fetch the line of operating systems that the current environment was?</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        string: What will be returned will be one of the following: windows, linux, mac</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os_name</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="c1"># Gotta return what we found</span>
+    <span class="k">return</span> <span class="n">os_name</span></div>
+
+
+<div class="viewcode-block" id="gui_capable"><a class="viewcode-back" href="../../../../sources/ada_hub.lib.helpers.html#ada_hub.lib.helpers.system.gui_capable">[docs]</a><span class="k">def</span> <span class="nf">gui_capable</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Is the current environment able to produce a graphical user interface on-demand?</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Is the system GUI-capable? True for yes, False for no</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">os_fam</span> <span class="o">=</span> <span class="n">get_os_family</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os_fam</span> <span class="o">==</span> <span class="s1">&#39;windows&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">os_fam</span> <span class="o">==</span> <span class="s1">&#39;linux&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x_is_running</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taylor-Jayde Blackstone
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
