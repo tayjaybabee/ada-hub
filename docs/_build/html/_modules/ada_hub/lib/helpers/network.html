@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ada_hub.lib.helpers.network &mdash; AdaHub 1.0-a1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> AdaHub
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cmd.html">Command line utilities</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">AdaHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../ada_hub.html">ada_hub</a> &raquo;</li>
+        
+      <li>ada_hub.lib.helpers.network</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ada_hub.lib.helpers.network</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">A module as part of the AdaHub.lib.helpers package that contains functions pertaining to network status,</span>
+<span class="sd">connectivity, etc</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.constants</span> <span class="kn">import</span> <span class="n">PROG</span>
+
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+
+<span class="n">m_log_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.Helpers.Network&#39;</span>
+<span class="n">m_log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">m_log_name</span><span class="p">)</span>
+<span class="n">m_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Imported and started logger for: </span><span class="si">{</span><span class="n">m_log_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="backup_test"><a class="viewcode-back" href="../../../../sources/ada_hub.lib.helpers.html#ada_hub.lib.helpers.network.backup_test">[docs]</a><span class="k">def</span> <span class="nf">backup_test</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    A method to really figure out if there&#39;s no connection to the outside network. Basically pings https://inspyre.tech</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Were we able to ping https://inspyre.tech? True for yes, False for no</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">urllib.request</span>  <span class="c1"># We import this here because there&#39;s no need to bring this library into memory without</span>
+                           <span class="c1"># calling this particular function</span>
+
+    <span class="c1"># Try using the urllib.request library to connect to https://inspyre.tech. If we&#39;re unable to reach it,</span>
+    <span class="c1"># urllib.request&#39;s &#39;urllopen&#39; function will return an exception. Therefore, upon exception we return False</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;https://inspyre.tech&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span><span class="p">:</span>  <span class="c1"># Sloppy, I know.</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+    <span class="c1">#     |</span>
+    <span class="c1"># TJB v</span>
+    <span class="c1"># ToDo:</span>
+    <span class="c1">#     - Find out what exception is raised if urlopen can&#39;t connect to a target</span>
+    <span class="c1">#         - Handle that particular exception in the &#39;try&#39; statement above.</span>
+    <span class="c1">#             - If the exception is anything other than the exception that means urlopen failed to reach the</span>
+    <span class="c1">#             requested host then re-raise the exception and exit_cleanly with a non-zero status code.</span>
+
+
+<div class="viewcode-block" id="conn_test"><a class="viewcode-back" href="../../../../sources/ada_hub.lib.helpers.html#ada_hub.lib.helpers.network.conn_test">[docs]</a><span class="k">def</span> <span class="nf">conn_test</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    A function to check if there&#39;s an internet connection.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Is there an internet connection? True if yes, False if no.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Set up the logger, and announce self if the log output-level is at the proper level</span>
+    <span class="n">log_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">m_log_name</span><span class="si">}</span><span class="s1">.conn_test&#39;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received request to check internet connectivity&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Grab the ip_address</span>
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">())</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Determined IP address is </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Based on the IP address, determine if we should run a backup connectivity check, actually reaching outside the</span>
+    <span class="c1"># network</span>
+    <span class="k">if</span> <span class="n">ip_address</span> <span class="o">==</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;IP Address </span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s1"> indicates a lack of internet connectivity&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Running a backup network connectivity check.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">backup_test</span><span class="p">():</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Backup test was a success...&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Backup check failed as well. Failing out...&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;We have an internet connection&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taylor-Jayde Blackstone
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

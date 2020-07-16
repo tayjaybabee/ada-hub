@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ada-hub command &mdash; AdaHub 1.0-a1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="gui command" href="cmd_gui.html" />
+    <link rel="prev" title="Command line utilities" href="cmd.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> AdaHub
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="cmd.html">Command line utilities</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ada-hub command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Named Arguments">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Sub-Commands">Sub-Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Sub-commands:">Sub-commands:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#credits">credits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cli">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gui">gui</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmd_gui.html">gui command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmd_cli.html">cli command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmd_credits.html">credits command</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AdaHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="cmd.html">Command line utilities</a> &raquo;</li>
+        
+      <li>ada-hub command</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/cmd_main.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ada-hub-command">
+<h1>ada-hub command<a class="headerlink" href="#ada-hub-command" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">ada</span><span class="o">-</span><span class="n">hub</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span> <span class="o">|</span> <span class="o">-</span><span class="n">d</span> <span class="o">|</span> <span class="o">-</span><span class="n">q</span> <span class="o">|</span> <span class="o">-</span><span class="n">s</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span> <span class="n">DATA_DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">C</span> <span class="n">CONFIG_DIR</span><span class="p">]</span> <span class="p">{</span><span class="n">credits</span><span class="p">,</span><span class="n">cli</span><span class="p">,</span><span class="n">gui</span><span class="p">}</span> <span class="o">...</span>
+</pre></div>
+</div>
+<div class="section" id="Named Arguments">
+<h2>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline">¶</a></h2>
+<dl class="option-list">
+<dt><kbd>-v, --verbose</kbd></dt>
+<dd><p>Instruct the logger to output all messages below debug level to the console</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-d, --debug</kbd></dt>
+<dd><p>Instruct the logger to output all messages it has to the console</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-q, --quiet</kbd></dt>
+<dd><p>Instruct the logger to suppress all logger messages below WARNING level from being output to the console</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-s, --silent</kbd></dt>
+<dd><p>Instruct the logger to suppress all logger messages from being output to the console unless they are describing a fatal exception.</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-D, --data-dir</kbd></dt>
+<dd><p>Provide the filesystem-location of your application’s data directory, or the destination you want the program to create a data-directory in.</p>
+</dd>
+<dt><kbd>-C, --config-dir</kbd></dt>
+<dd><p>Provide the filesystem-location of your application’s configuration directory, or the destination you want the program to create a configuration directory in.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="Sub-Commands">
+<h2>Sub-Commands<a class="headerlink" href="#Sub-Commands" title="Permalink to this headline">¶</a></h2>
+<p>Valid sub-commands for ada-hub</p>
+<dl class="option-list">
+<dt><kbd>command</kbd></dt>
+<dd><p>Possible choices: credits, cli, gui</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="Sub-commands:">
+<h2>Sub-commands:<a class="headerlink" href="#Sub-commands:" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="credits">
+<h3>credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h3>
+<p>Print out the credits for all external services/software used to make Ada Hub</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ada</span><span class="o">-</span><span class="n">hub</span> <span class="n">credits</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="Named Arguments_repeat1">
+<h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat1" title="Permalink to this headline">¶</a></h4>
+<dl class="option-list">
+<dt><kbd>-c, --clear-screen</kbd></dt>
+<dd><p>Clear the terminal before printing the credits</p>
+<p>Default: False</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="cli">
+<h3>cli<a class="headerlink" href="#cli" title="Permalink to this headline">¶</a></h3>
+<p>Run a quick query using the command line (no GUI)</p>
+<blockquote>
+<div><p>Run the program in command-line mode. This is useful if you’re running a headless set-up</p>
+<p>See <a class="reference internal" href="cmd_cli.html"><span class="doc">cli command</span></a></p>
+</div></blockquote>
+<dl>
+<dt>gui</dt><dd><p>Run the program in Graphical User Interface mode</p>
+<p>See <a class="reference internal" href="cmd_gui.html"><span class="doc">gui command</span></a></p>
+</dd>
+<dt>credits</dt><dd><p>Show the credits for the application. This includes developers, API providers, and credit to artists who helped make icons, pictures, etc</p>
+<p>See <a class="reference internal" href="cmd_credits.html"><span class="doc">credits command</span></a></p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ada</span><span class="o">-</span><span class="n">hub</span> <span class="n">cli</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LOCATION</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="Named Arguments_repeat2">
+<h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat2" title="Permalink to this headline">¶</a></h4>
+<dl class="option-list">
+<dt><kbd>-l, --location</kbd></dt>
+<dd></dd>
+</dl>
+</div>
+</div>
+<div class="section" id="gui">
+<h3>gui<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h3>
+<p>Start the program with the full GUI</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ada</span><span class="o">-</span><span class="n">hub</span> <span class="n">gui</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EMULATOR</span><span class="p">]</span> <span class="p">{</span><span class="nb">list</span><span class="o">-</span><span class="n">themes</span><span class="p">}</span> <span class="o">...</span>
+</pre></div>
+</div>
+<div class="section" id="Named Arguments_repeat3">
+<h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat3" title="Permalink to this headline">¶</a></h4>
+<dl class="option-list">
+<dt><kbd>-e, --emulator</kbd></dt>
+<dd><p>Start the Ada Hub application with the Sense-Emu backend.</p>
+<p>Default: False</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="GUI Specific Commands">
+<h4>GUI Specific Commands<a class="headerlink" href="#GUI Specific Commands" title="Permalink to this headline">¶</a></h4>
+<dl class="option-list">
+<dt><kbd>gui_command</kbd></dt>
+<dd><p>Possible choices: list-themes</p>
+<p>Sub-commands specific to information or manipulation of the Graphical User Interface?</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="Sub-commands:_repeat1">
+<h4>Sub-commands:<a class="headerlink" href="#Sub-commands:_repeat1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="list-themes">
+<h5>list-themes<a class="headerlink" href="#list-themes" title="Permalink to this headline">¶</a></h5>
+<p>Print out a list of strings that contain a list of acceptable theme names, and then quits. (Useful for if you want to specify a theme in your program-opening commands</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ada</span><span class="o">-</span><span class="n">hub</span> <span class="n">gui</span> <span class="nb">list</span><span class="o">-</span><span class="n">themes</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cmd_gui.html" class="btn btn-neutral float-right" title="gui command" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="cmd.html" class="btn btn-neutral float-left" title="Command line utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taylor-Jayde Blackstone
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ada_hub.lib.ada_sense &mdash; AdaHub 1.0-a1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> AdaHub
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cmd.html">Command line utilities</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AdaHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../ada_hub.html">ada_hub</a> &raquo;</li>
+        
+      <li>ada_hub.lib.ada_sense</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ada_hub.lib.ada_sense</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ada_hub.lib.constants</span> <span class="kn">import</span> <span class="n">PROG</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.helpers.system</span> <span class="kn">import</span> <span class="n">gui_capable</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.helpers.debug</span> <span class="kn">import</span> <span class="n">format_members</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.ada_sense.helpers.config</span> <span class="kn">import</span> <span class="n">add_new</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.config</span> <span class="kn">import</span> <span class="n">write_config</span>
+
+<span class="c1"># Import exceptions</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.ada_sense.errors</span> <span class="kn">import</span> <span class="n">InvalidTempScaleError</span>
+
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+
+
+<div class="viewcode-block" id="AdaSense"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense">[docs]</a><span class="k">class</span> <span class="nc">AdaSense</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AdaSense.check_scale"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.check_scale">[docs]</a>    <span class="k">def</span> <span class="nf">check_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alt_scale</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Checks the configured temperature scale found in self.temp_scale for validity.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Will return True if successful</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Define a logger name, and start it. Then announce that we started it.</span>
+        <span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s1">.check_scale&#39;</span><span class="p">)</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Started logger for </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received request to check the configured temperature units for validity&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Current configured temperature unit is: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">alt_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received argument for alt_scale, checking that instead of current configuration&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">alt_scale</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_temp_scales</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidTempScaleError</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># If the configured temperature unit is not found in the list of valid temperature scales raise an</span>
+        <span class="c1"># InvalidTempScaleError exception, otherwise; just return True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_temp_scales</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidTempScaleError</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="AdaSense.change_temp_scale"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.change_temp_scale">[docs]</a>    <span class="k">def</span> <span class="nf">change_temp_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_scale</span><span class="p">):</span>
+        <span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span> <span class="o">+</span> <span class="s1">&#39;.change_temp_scale&#39;</span><span class="p">)</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Started logger for </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received request to change temp scale from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">new_scale</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="o">==</span> <span class="n">new_scale</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;These are the same values!&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_scale</span><span class="p">(</span><span class="n">new_scale</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;ADA_SENSE_SETTINGS&#39;</span><span class="p">][</span><span class="s1">&#39;temp_scale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_scale</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="o">=</span> <span class="n">new_scale</span>
+            <span class="n">write_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">InvalidTempScaleError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AdaSense.load_sense"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.load_sense">[docs]</a>    <span class="k">def</span> <span class="nf">load_sense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emulate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.load_sense&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received request to load AdaSense and it</span><span class="se">\&#39;</span><span class="s1">s drivers...&#39;</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Attempting to load the SenseHat...&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">emulate</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Did not receive emulate flag, attempting to load live hardware...&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">sense_hat</span> <span class="kn">import</span> <span class="n">SenseHat</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;SenseHat loaded. Not Emulated.&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ModuleNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Received exception while attempting to load the Sense hardware&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;RTIMU&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="fm">__str__</span><span class="p">():</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;No SenseHat hardware detected. Attempting load again, but with emulator.&#39;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">load_sense</span><span class="p">(</span><span class="n">emulate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">gui_capable</span><span class="p">():</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;This operating system does not have a GUI. The Sense Hat emulator will not initialize &#39;</span>
+                          <span class="s1">&#39;given such conditions.&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">sense_emu</span> <span class="kn">import</span> <span class="n">SenseHat</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;SenseHat loaded. Emulated.&#39;</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;SenseHat Emulator Loaded. Performing test probe to ensure reliable emulator initialization &#39;</span>
+                         <span class="s1">&#39;occurred.&#39;</span><span class="p">)</span>
+                <span class="n">temp_sense</span> <span class="o">=</span> <span class="n">SenseHat</span><span class="p">()</span>
+                <span class="n">sense_temp</span> <span class="o">=</span> <span class="n">temp_sense</span><span class="o">.</span><span class="n">temperature</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probe test successful! If you</span><span class="se">\&#39;</span><span class="s1">re curious, we received </span><span class="si">{</span><span class="n">sense_temp</span><span class="si">}</span><span class="s1"> as a result. &#39;</span>
+                          <span class="sa">f</span><span class="s1">&#39;Discarding reading.&#39;</span><span class="p">)</span>
+
+                <span class="n">sense_temp</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unable to load SenseHat emulator. This is not recoverable as the emulator is only ever &#39;</span>
+                          <span class="s1">&#39;called explicitly or if loading the hardware failed first.&#39;</span><span class="p">)</span>
+                <span class="k">raise</span>
+
+            <span class="c1"># Since we&#39;ve now determined exactly which Sense Hat library we&#39;ll use; let&#39;s go ahead and initialize</span>
+            <span class="c1"># that class while we store</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sense</span> <span class="o">=</span> <span class="n">SenseHat</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AdaSense.get_humidity"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.get_humidity">[docs]</a>    <span class="k">def</span> <span class="nf">get_humidity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Query the humidity sensor and receive the relative humidity</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A string containing the result</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.AdaSense.get_humidity&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received request to fetch relative humidity.&#39;</span><span class="p">)</span>
+
+        <span class="n">hum</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sense</span><span class="o">.</span><span class="n">humidity</span><span class="p">)</span>
+        <span class="n">f_hum</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">hum</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
+
+        <span class="k">return</span> <span class="n">f_hum</span></div>
+
+<div class="viewcode-block" id="AdaSense.get_temp"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.get_temp">[docs]</a>    <span class="k">def</span> <span class="nf">get_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">ada_hub.lib.ada_sense.helpers.converters</span> <span class="kn">import</span> <span class="n">c_to_f</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Get the current ambient temperature according to the humidity sensor</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The current temperature in celsius, rounded to two decimal places.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.AdaSense.get_temp&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received request to fetch ambient temperature.&#39;</span><span class="p">)</span>
+
+        <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sense</span><span class="o">.</span><span class="n">temperature</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="o">==</span> <span class="s1">&#39;f&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="o">==</span> <span class="s1">&#39;fahrenheit&#39;</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">c_to_f</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">temp</span></div>
+
+<div class="viewcode-block" id="AdaSense.get_pressure"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.get_pressure">[docs]</a>    <span class="k">def</span> <span class="nf">get_pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Query the sense hat for barometric pressure data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The barometric pressure in millibars</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Start a logger for debugging</span>
+        <span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.AdaSense.get_pressure&#39;</span><span class="p">)</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+
+        <span class="c1"># If we&#39;re running in the verbose mode we&#39;ll go ahead and announce that we&#39;ve started the logger and that</span>
+        <span class="c1"># we&#39;re querying the sensor</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Started logger for </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received request to fetch barometric pressure.&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Querying sensor...&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Query the sensor and load the results into a variable</span>
+        <span class="n">pres</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sense</span><span class="o">.</span><span class="n">pressure</span>
+
+        <span class="c1"># Announce that our sensor query was successful and that we&#39;re going to return it to the caller</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received </span><span class="si">{</span><span class="n">pres</span><span class="si">}</span><span class="s1"> for pressure sensor value. Rounding and appending unit...&#39;</span><span class="p">)</span>
+
+        <span class="n">pres</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">pres</span><span class="p">)</span>
+        <span class="n">pres</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">pres</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;mbar&#39;</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Returning rounded and formatted pressure reading (</span><span class="si">{</span><span class="n">pres</span><span class="si">}</span><span class="s1">) to caller.&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Return formatted and rounded result to the caller</span>
+        <span class="k">return</span> <span class="n">pres</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.AdaSense&#39;</span><span class="p">)</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Started logger for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initializing class.&#39;</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Attempting to load configuration from the config object received.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="c1"># If we&#39;re not able to find the &#39;ADA_SENSE_SETTINGS&#39; section in the config file, we should go ahead and</span>
+        <span class="c1"># create one, add it, and fill it with defaults.</span>
+        <span class="k">if</span> <span class="s1">&#39;ADA_SENSE_SETTINGS&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">add_new</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Setting up attributes.&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Declare some attributes with default values</span>
+
+        <span class="c1"># Declare an attribute containing a list of acceptable temperature reading scales. This will be useful to</span>
+        <span class="c1"># validate against later if/when we receive a request to read back ambient temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_temp_scales</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s1">&#39;c&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;celsius&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;fahrenheit&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;k&#39;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;ADA_SENSE_SETTINGS&#39;</span><span class="p">][</span><span class="s1">&#39;temp_scale&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_scale</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">InvalidTempScaleError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Falling back to using celsius as our temperature scale.&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">change_temp_scale</span><span class="p">(</span><span class="s1">&#39;celsius&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Define an attribute named &#39;sense&#39; with a value of None type. This is to be filled later</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sense</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Let&#39;s go ahead and fill that attribute by running the &#39;load_sense&#39; function of this class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_sense</span><span class="p">()</span></div>
+
+
+<span class="n">m_log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">PROG</span><span class="p">)</span>
+
+<span class="n">m_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Imported! (ada_hub.lib.ada_sense.__init__)&#39;</span><span class="p">)</span>
+<span class="n">m_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Members introduced with import: </span><span class="si">{</span><span class="n">format_members</span><span class="p">(</span><span class="nb">dir</span><span class="p">(),</span> <span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taylor-Jayde Blackstone
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

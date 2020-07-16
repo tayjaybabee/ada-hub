@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ada_hub.lib.gui.models.windows.main &mdash; AdaHub 1.0-a1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script src="../../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home" alt="Documentation Home"> AdaHub
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../cmd.html">Command line utilities</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">AdaHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../../../ada_hub.html">ada_hub</a> &raquo;</li>
+        
+          <li><a href="../../../gui.html">ada_hub.lib.gui</a> &raquo;</li>
+        
+      <li>ada_hub.lib.gui.models.windows.main</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ada_hub.lib.gui.models.windows.main</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">PySimpleGUIQt</span> <span class="k">as</span> <span class="nn">Qt</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+
+<span class="kn">from</span> <span class="nn">ada_hub.lib.constants</span> <span class="kn">import</span> <span class="n">PROG</span>
+
+<span class="kn">from</span> <span class="nn">ada_hub.lib.gui.helpers</span> <span class="kn">import</span> <span class="n">import_icon_set</span>
+
+<span class="c1"># Import Sense Hat interface</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.ada_sense</span> <span class="kn">import</span> <span class="n">AdaSense</span>
+
+
+<div class="viewcode-block" id="MainWindow"><a class="viewcode-back" href="../../../../../../sources/ada_hub.lib.gui.models.windows.html#ada_hub.lib.gui.models.windows.main.MainWindow">[docs]</a><span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="MainWindow.sense_frame_layout"><a class="viewcode-back" href="../../../../../../sources/ada_hub.lib.gui.models.windows.html#ada_hub.lib.gui.models.windows.main.MainWindow.sense_frame_layout">[docs]</a>    <span class="k">def</span> <span class="nf">sense_frame_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        A static method that returns a layout structure for a frame in PySimpleGUIQt</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            frame layout object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Temperature:&#39;</span><span class="p">,</span> <span class="n">justification</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">),</span>
+                  <span class="n">Qt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ada_sense</span><span class="o">.</span><span class="n">get_temp</span><span class="p">(),</span> <span class="n">justification</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;sense_temp_out&#39;</span><span class="p">,</span> <span class="n">auto_size_text</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="p">],</span>
+
+                <span class="p">[</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Relative Humidity:&#39;</span><span class="p">,</span> <span class="n">justification</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">),</span>
+                  <span class="n">Qt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ada_sense</span><span class="o">.</span><span class="n">get_humidity</span><span class="p">(),</span> <span class="n">justification</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;sense_hum_out&#39;</span><span class="p">)</span> <span class="p">],</span>
+
+                <span class="p">[</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Barometric Pressure:&#39;</span><span class="p">,</span> <span class="n">justification</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">),</span>
+                  <span class="n">Qt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ada_sense</span><span class="o">.</span><span class="n">get_pressure</span><span class="p">(),</span> <span class="n">justification</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;sense_pres_out&#39;</span><span class="p">),</span>
+                <span class="p">]</span>
+        <span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">layout</span></div>
+
+
+<div class="viewcode-block" id="MainWindow.weather_frame"><a class="viewcode-back" href="../../../../../../sources/ada_hub.lib.gui.models.windows.html#ada_hub.lib.gui.models.windows.main.MainWindow.weather_frame">[docs]</a>    <span class="k">def</span> <span class="nf">weather_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s1">&#39;Weather for &#39;</span><span class="p">)]</span>
+                <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MainWindow.main_layout"><a class="viewcode-back" href="../../../../../../sources/ada_hub.lib.gui.models.windows.html#ada_hub.lib.gui.models.windows.main.MainWindow.main_layout">[docs]</a>    <span class="k">def</span> <span class="nf">main_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        A method that returns a frame layout object for the entire window&#39;s frame</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            frame layout object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="s1">&#39;Sensor Information&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sense_frame_layout</span><span class="p">(),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">450</span><span class="p">,</span><span class="mi">450</span><span class="p">))</span> <span class="p">],</span>
+                <span class="p">[</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">enable_events</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;quit_button&#39;</span><span class="p">,</span> <span class="n">image_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">icons</span><span class="o">.</span><span class="n">quit</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="s1">&#39;Quit&#39;</span><span class="p">,</span>
+                            <span class="n">button_color</span><span class="o">=</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">theme_text_color</span><span class="p">(),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">theme_background_color</span><span class="p">()),</span> <span class="n">border_width</span><span class="o">=</span><span class="mi">0</span> <span class="p">),</span>
+                  <span class="n">Qt</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">enable_events</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;refresh_all_button&#39;</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="s1">&#39;Refresh All&#39;</span><span class="p">,</span>
+                            <span class="n">image_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">icons</span><span class="o">.</span><span class="n">refresh</span><span class="p">,</span> <span class="n">border_width</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                            <span class="n">button_color</span><span class="o">=</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">theme_text_color</span><span class="p">(),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">theme_background_color</span><span class="p">()))</span>
+                  <span class="p">]</span>
+                <span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">layout</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Instantiate a new instance of MainWindow</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Gather the name of the icon set we should be using. We will use this to search the icon set packages</span>
+        <span class="n">icon_set_str</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">][</span><span class="s1">&#39;icon_set&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icons</span> <span class="o">=</span> <span class="n">import_icon_set</span><span class="p">(</span><span class="n">icon_set_str</span><span class="p">)</span>
+
+        <span class="c1"># Create an instance-flag that can be toggled to False or True when this window is active or not respectively</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">win_active</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Start an instance of the AdaSense class which will allow us to easily interface with the SenseHat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ada_sense</span> <span class="o">=</span> <span class="n">AdaSense</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="c1"># Create a log-name for this class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.GUI.MainWindow&#39;</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Started logger for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initializing AdaHub.GUI.MainWindow...&#39;</span><span class="p">)</span>
+
+        <span class="n">Qt</span><span class="o">.</span><span class="n">theme</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">][</span><span class="s1">&#39;theme&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="s1">&#39;AdaHub Home&#39;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">main_layout</span><span class="p">(),</span> <span class="n">no_titlebar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha_channel</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+                                <span class="n">grab_anywhere</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taylor-Jayde Blackstone
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
