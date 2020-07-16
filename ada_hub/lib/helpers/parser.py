@@ -1,47 +1,4 @@
-#!/usr/bin/env python3
-
 import argparse
-import os
-import inspy_logger
-import logging
-
-from pathlib import Path
-from platform import system as os_family
-
-from ada_hub.lib.constants import HOME_DIR, DEFAULT_DATA_ROOT
-from ada_hub.lib.helpers.pid import write_pid
-from ada_hub.lib.config import AdaHubConfig
-from ada_hub import clean_exit
-
-
-NAME = 'AdaHub'
-
-get_logger = logging.getLogger
-
-
-def test_connection():
-    from ada_hub.lib.helpers.network import conn_test
-
-    return conn_test()
-
-
-def start_logger(args):
-    global get_logger
-
-    is_verbose = False
-
-    if args.verbose:
-        is_verbose = True
-
-    if args.debug:
-        is_verbose = True
-
-    device = inspy_logger.start(name='AdaHub', debug=is_verbose)
-    device.debug('Logger started for AdaHub (raw device test)')
-    log = logging.getLogger(f'{NAME}.start_logger')
-    log.info('Started logger')
-
-    return device
 
 
 def parse_args():
@@ -75,21 +32,6 @@ def parse_args():
                                      'console unless they are describing a fatal exception.',
                                 required=False)
 
-    write_ok_args = parser.add_mutually_exclusive_group(required=False)
-
-    write_ok_args.add_argument('-W', '--write-all',
-                               required=False,
-                               action='store_true',
-                               default=False,
-                               help='Write all files, regardless of location until permission fail')
-
-    write_ok_args.add_argument('-w', '--write-data-dir',
-                               required=False,
-                               action='store_true',
-                               default=True,
-                               help=f'Write all files and directories in the configured data directory structure. By '
-                                    f'default this directory is {DEFAULT_DATA_ROOT}')
-
     subparsers = parser.add_subparsers(title='Sub-Commands',
                                        dest='command',
                                        description='Valid sub-commands for ada-hub')
@@ -117,6 +59,7 @@ def parse_args():
     # of attempting to find an attached HAT. This in-turn starts a graphical program so this will only be available
     # if the user is running AdaHub in graphical mode.
     gui_subparser.add_argument('-e', '--emulator', help='Start the Ada Hub application with the Sense-Emu backend.',
+                               type=bool,
                                default=False)
 
     gui_subcommands = gui_subparser.add_subparsers(title='GUI Specific Commands', dest='gui_command',
@@ -140,69 +83,4 @@ def parse_args():
                              "or the destination you want the program to create a configuration directory in.",
                         required=False)
 
-    return parser.parse_args()
-
-
-def main():
-    from time import sleep
-    """
-
-    This is the script's main entry point. If you have to call a function of this script directly for some reason
-    you'd call on this function.
-
-    Returns:
-
-    """
-    args = parse_args()
-
-    mode = args.command
-
-    log = start_logger(args)
-
-    sleep(0.02)
-
-    log.debug(f'Starting Ada Hub in mode: {mode.upper()}')
-    log.debug(f'Started Ada Hub with the following command-line args: {args}')
-
-    from ada_hub.errors import ConnectivityError
-
-    config = AdaHubConfig(args.config_dir)
-    config = config.config
-
-    if mode == 'credits':
-        from ada_hub.lib.helpers.credits import third_party
-        log.debug('Printing credits as directed...')
-        third_party(config)
-        log.debug('Exiting program')
-        clean_exit(0, False)
-
-    if args.data_dir:
-        with open('conf_dir.txt', 'w') as f:
-            f.write(args.data_dir)
-
-    if args.data_dir is None:
-        data_dir = DEFAULT_DATA_ROOT
-    else:
-        data_dir = args.data_dir
-
-    connected = test_connection()
-
-    if not connected:
-        try:
-            raise ConnectivityError('There seems to be no internet connection', err_type='No Connection')
-        except ConnectivityError as e:
-            log.error(e.message)
-
-    pid_dir = str(f'{data_dir}run/')
-    log.debug(f'Determined PID directory to be: {pid_dir}')
-    write_pid(pid_dir)
-
-    from ada_hub.lib.gui import GUIApp, GUIConfig
-
-    gui_config = GUIConfig(config)
-
-    GUIApp(gui_config.conf, args)
-
-
-if __name__ == '__main__':
-    main()
+    return parser

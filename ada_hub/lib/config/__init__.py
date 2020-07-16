@@ -1,3 +1,9 @@
+"""
+
+This module provides functions for creating, saving, and maintaining the ConfigParser object for AdaHub.
+
+"""
+
 # Local imports
 from ada_hub.lib.constants import PROG, DEFAULT_CONF_FILE_PATH, DEFAULT_DATA_ROOT, DEFAULT_CONF_ROOT
 
@@ -8,6 +14,7 @@ from pathlib import Path
 # Standard Library imports (standard)
 import configparser
 
+from ada_hub.lib.config.defaults import create_new_config
 
 def write_config(conf_obj: object, conf_path: str) -> None:
     """
@@ -22,6 +29,7 @@ def write_config(conf_obj: object, conf_path: str) -> None:
         None
 
     """
+
     with open(conf_path, 'w') as fp:
         conf_obj.write(fp)
 
@@ -60,17 +68,6 @@ class AdaHubConfig(object):
         # Finally, return our object to the caller
         return config
 
-    def build_default(self):
-
-        conf = configparser.ConfigParser()
-        conf['RUNTIME'] = {
-                'conf_file_path': self.config_file_path,
-                'data_root_path': self.default_data_root,
-                'run_dir_path': str(self.default_data_root + 'run/')
-                }
-
-        return conf
-
     def __init__(self, args):
         # Import directly
         import os
@@ -78,10 +75,24 @@ class AdaHubConfig(object):
         # From * standard library imports
         from pathlib import Path
 
-        # From * local imports
-        self.default_data_root = DEFAULT_DATA_ROOT
+        if args.data_dir is None:
+            self.conf_dir = DEFAULT_CONF_ROOT
+        else:
+            self.conf_dir = str(args.data_dir() + '/conf')
 
-        path_to_config = self.default_data_root
+        self.config_filepath = str(self.conf_dir + '/settings.ini')
+
+        conf_dir_exists = os.path.exists(Path(self.conf_dir))
+        conf_file_exists = os.path.exists(Path(self.conf_file_path))
+        conf_file_isfile = os.path.exists(Path(self.config_file_path))
+
+        if conf_dir_exists and conf_file_exists and conf_file_isfile:
+            self.config = self.read_from_disk()
+            
+        if args.data_dir:
+            path_to_config = args.data_dir
+        else:
+            path_to_config = args.data_dir
 
         # Start a logger
         self.log_name = f'{PROG}.AdaHubConfig'

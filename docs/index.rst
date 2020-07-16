@@ -6,17 +6,12 @@
 Welcome to AdaHub's documentation!
 ==================================
 
-.. automodule:: ada_hub
-    :members:
+Contents:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-.. argparse::
-   :filename: ../scripts/ada-hub.py
-   :func: parse_args
-   :prog: ada-hub
+   cmd.rst
 
 
 
