@@ -1,22 +1,38 @@
+"""
+
+Author: Taylor-Jayde Blackstone <t.blackstone@inspyre.tech>
+since: 1.0a
+
+Description:
+
+    A collection of constructor-functions that will make a new default config file to be filled later.
+
+"""
+
 from ada_hub.lib.constants import PROG, DEFAULT_DATA_ROOT, DEFAULT_CONF_ROOT, DEFAULT_RUN_ROOT
+from configparser import ConfigParser
 
 run_root = DEFAULT_RUN_ROOT
 conf_root = DEFAULT_CONF_ROOT
 root = DEFAULT_DATA_ROOT
 
-
-conf_file_contents = []
-
-
 def runtime_conf():
+    """
+
+    Create a dictionary containing the section 'APP' and define its default options
+
+    Returns:
+        dict: A two-deep nested dictionary that makes up the 'APP' section of the application's config
+
+    """
 
     title = 'APP'
 
     content = {
             title: {
 
-                    'conf_file_path': run_root,
-                    'data_root_path': conf_root,
+                    'conf_file_path': conf_root,
+                    'data_root_path': run_root,
                     'run_dir_path':   root
 
                     },
@@ -26,6 +42,14 @@ def runtime_conf():
 
 
 def runtime_stats():
+    """
+
+    Create a nested dictionary containing the 'APP.STATS' section for AdaHub's config
+
+    Returns:
+        dict: A two-deep nested dictionary that contains 'APP.STATS' section of AdaHub's config.
+
+    """
 
     title = 'RUNTIME.STATS'
 
@@ -43,6 +67,15 @@ def runtime_stats():
 
 
 def gui_conf():
+    """
+
+    Create a nested dictionary containing the 'GUI' section for AdaHubs config.
+
+    Returns:
+        dict:
+            A two-deep nested dictionary containing the 'GUI' section and its options
+
+    """
 
     title = 'GUI'
 
@@ -61,6 +94,15 @@ def gui_conf():
 
 
 def sense_conf():
+    """
+
+    Create a nested dictionary containing the 'SENSE' section and its options for AdaHubs config
+
+    Returns:
+        dict:
+            A two-deep nested dictionary that contains the 'SENSE' section of the application's config
+
+    """
 
     title = 'SENSE'
 
@@ -80,6 +122,15 @@ def sense_conf():
 
 
 def sense_device():
+    """
+
+    Create a nested dictionary that contains the 'SENSE.DEVICE' section of the config file and its options
+
+    Returns:
+        dict:
+            A two-level nested dictionary that contains the 'SENSE.DEVICE' section of the config file and its options
+
+    """
 
     title = 'SENSE.DEVICE'
 
@@ -97,6 +148,42 @@ def sense_device():
     return content
 
 
+def weather_conf():
+    """
+    
+    Create a nested dictionary that contains the 'SENSE.DEVICE' section of the config file and its options
+    
+    Returns:
+        dict:
+            A two-level nested dictionary that contains the 'SENSE.DEVICE' section of the config file and its options
+
+    """"""
+    
+    
+    Returns:
+
+    """
+
+    title = 'WEATHER'
+
+    content = {
+
+            title: {
+
+                    'temp_scale': 'metric',
+                    'refresh_secs': '900',
+                    'allergy': 'False',
+                    'show_phase': 'True',
+                    'tray_hover': 'True'
+
+                    }
+
+            }
+
+    return content
+
+
+
 def weather_notifications():
 
     title = 'WEATHER.NOTIFICATIONS'
@@ -112,27 +199,6 @@ def weather_notifications():
                     'full_moon': '',
 
                     },
-
-            }
-
-    return content
-
-
-def weather_conf():
-
-    title = 'WEATHER'
-
-    content = {
-
-            title: {
-
-                    'temp_scale': 'metric',
-                    'refresh_secs': '900',
-                    'allergy': 'False',
-                    'show_phase': 'True',
-                    'tray_hover': 'True'
-
-                    }
 
             }
 
@@ -164,7 +230,17 @@ def locale_conf():
     return content
 
 
-def create_new_config():
+def create_new_config(args):
+    """
+
+
+
+    Args:
+        args ():
+
+    Returns:
+
+    """
     from configparser import ConfigParser
 
     parser = ConfigParser()

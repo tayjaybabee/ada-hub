@@ -1,10 +1,16 @@
+"""
+
+A module containing :class: '~api.Weather'
+
+"""
+
 from ada_hub.lib.constants import PROG
 
 from logging import getLogger
 
 class Weather(object):
 
-    def __init__(self):
+    def __init__(self, config):
         c_log_name = str(f'{PROG}.Weather')
         c_log = getLogger(c_log_name)
         c_log.debug(f'Logger initialized for {c_log_name}')

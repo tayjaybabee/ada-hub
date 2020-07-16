@@ -1,4 +1,6 @@
 from ada_hub.lib.constants import PROG as NAME, DEFAULT_DATA_ROOT
+from ada_hub.lib.helpers.parser import parse_args
+
 from logging import getLogger as get_logger
 import logging
 
@@ -6,12 +8,14 @@ m_name = f'{NAME}.Package'
 m_log = get_logger(m_name)
 m_log.debug(f'Imported {m_name}!')
 
+PROG_ARGS = parse_args()
+
 
 def clean_exit(status, should_rem_pid=True):
     """
 
     A function that - when called - will cleanly exit the AdaHub application. On a clean exit the application will
-    remove the saved PID file, and report it's status.
+    remove the saved PID file, and report its status.
 
     Args:
         status (int): Either 1 or 0. 0 means everything went as expected. 1 means an error or exception occurred.
