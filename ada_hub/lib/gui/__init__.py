@@ -12,7 +12,7 @@ class GUIConfig:
     def merge_default_config(prog_conf):
         """
 
-        Take a configuration structure and add the GUI_PREFS section to it, as well as some basic/default options.
+        Take a configuration structure and add the GUI section to it, as well as some basic/default options.
         After setting the options the function will then return your modified configuration object.
 
         Args:
@@ -24,13 +24,13 @@ class GUIConfig:
         """
 
         # Add our section
-        prog_conf.add_section('GUI_PREFS')
+        prog_conf.add_section('GUI')
 
         # Add our basic configuration structure
-        prog_conf.set('GUI_PREFS', 'theme', 'DarkAmber')
-        prog_conf.set('GUI_PREFS', 'icon_set', 'sketch')
-        prog_conf.set('GUI_PREFS', 'grab_anywhere', 'False')
-        prog_conf.set('GUI_PREFS', 'advanced_mode', 'False')
+        prog_conf.set('GUI', 'theme', 'DarkAmber')
+        prog_conf.set('GUI', 'icon_set', 'sketch')
+        prog_conf.set('GUI', 'grab_anywhere', 'False')
+        prog_conf.set('GUI', 'advanced_mode', 'False')
 
         # Return the modified configuration object
         return prog_conf
@@ -46,19 +46,19 @@ class GUIConfig:
         """
 
         # Grab the configuration file's path from the provided configuration object.
-        conf_filepath = config['RUNTIME']['conf_file_path']
+        conf_filepath = config['APP']['conf_file_path']
 
         # Start a logger with an appropriate, descriptive name
         log_name = str(f'{PROG}.GUIConfig')
         log = getLogger(log_name)
 
-        section = 'GUI_PREFS'
+        section = 'GUI'
 
-        # Analyze the configuration object's sections to see if 'GUI_PREFS' is among them. If it's not,
+        # Analyze the configuration object's sections to see if 'GUI' is among them. If it's not,
         # we will send our configuration object off to "merge_default_config" to be modified appropriately.
-        log.debug('Looking for "GUI_PREFS" section in configuration')
+        log.debug('Looking for "GUI" section in configuration')
         if section not in config.sections():
-            log.debug('The configuration does not contain a "GUI_PREFS" section. Creating!')
+            log.debug('The configuration does not contain a "GUI" section. Creating!')
             config = self.merge_default_config(config)
             log.debug(f'Received the modified configuration object. With these sections: {config.sections()}')
             log.debug('Writing modified configuration to disk.')
@@ -68,7 +68,7 @@ class GUIConfig:
         # Go ahead and assign the config to an aptly named attribute
         self.conf = config
 
-        log.debug(f'Initialized GUI config in the following state: {self.conf["GUI_PREFS"]}')
+        log.debug(f'Initialized GUI config in the following state: {self.conf["GUI"]}')
 
 
 class GUIApp(object):
@@ -96,8 +96,8 @@ class GUIApp(object):
         self.main_win = main_win.window
 
         # Extract the theme indicated by the configuration to an aptly named attribute
-        self.theme = config['GUI_PREFS']['theme']
-        icon_set_str = config['GUI_PREFS']['icon_set']
+        self.theme = config['GUI']['theme']
+        icon_set_str = config['GUI']['icon_set']
 
         # Set up a flag that will be used to indicate the running status of this window
         self.main_active = main_win.win_active

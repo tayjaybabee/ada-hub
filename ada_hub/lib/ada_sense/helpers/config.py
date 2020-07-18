@@ -1,4 +1,4 @@
-from ada_hub.lib.constants import PROG
+ from ada_hub.lib.constants import PROG
 from ada_hub.lib.config import write_config
 
 

@@ -36,6 +36,7 @@ def write_config(conf_obj: object, conf_path: str) -> None:
 
 class AdaHubConfig(object):
 
+
     def read_from_disk(self):
         """
 
@@ -54,13 +55,13 @@ class AdaHubConfig(object):
 
         # For verbose output, announce ourselves and why we're operating.
         log.debug(f'Logger started for {log_name}')
-        log.debug(f'Received call to read config file from disk: {self.config_file_path}')
+        log.debug(f'Received call to read config file from disk: {self.conf_file_path}')
 
         # Initialize a new ConfigParser object for us to load the config file that we read into.
         config = configparser.ConfigParser()
 
         # Use the ConfigParser object to read the settings file, and parse it appropriately.
-        config.read(self.config_file_path)
+        config.read(self.conf_file_path)
 
         # For debugging purposes we will announce the sections we found within the config file.
         log.debug(f'Found config file with these sections: {config.sections()}')
@@ -75,16 +76,18 @@ class AdaHubConfig(object):
         # From * standard library imports
         from pathlib import Path
 
+        self.log_name = str(f'{PROG}.{__class__.__name__}')
+
         if args.data_dir is None:
             self.conf_dir = DEFAULT_CONF_ROOT
         else:
             self.conf_dir = str(args.data_dir() + '/conf')
 
-        self.config_filepath = str(self.conf_dir + '/settings.ini')
+        self.conf_file_path = str(self.conf_dir + '/settings.ini')
 
         conf_dir_exists = os.path.exists(Path(self.conf_dir))
         conf_file_exists = os.path.exists(Path(self.conf_file_path))
-        conf_file_isfile = os.path.exists(Path(self.config_file_path))
+        conf_file_isfile = os.path.exists(Path(self.conf_file_path))
 
         if conf_dir_exists and conf_file_exists and conf_file_isfile:
             self.config = self.read_from_disk()
@@ -117,27 +120,24 @@ class AdaHubConfig(object):
             config_path = Path(self.default_conf_file_path)
 
         # Finally, set this path as an attribute of the AdaHubConfig class
-        self.config_file_path = config_path
+        self.conf_file_path = config_path
 
-        self.conf_root = self.config_file_path.parent
+
+
+        self.conf_root = self.conf_file_path.parent
 
         if not Path(self.conf_root).exists():
             log.warning(f'Config root not present on system {self.conf_root}')
             os.makedirs(Path(self.conf_root))
             log.info('Directory written!')
         else:
-            if Path(self.config_file_path).exists():
+            if Path(self.conf_file_path).exists():
                 log.debug('Found config file')
                 self.config = self.read_from_disk()
 
             else:
                 log.debug('Did not find specified config file. Creating...')
-                config_struct = self.build_default()
-                write_config(config_struct, config_struct['RUNTIME']['conf_file_path'])
-                with open(config_struct['RUNTIME']['conf_file_path'], 'w') as fp:
-                    config_struct.write(fp)
-                    log.debug('Written')
-                self.config = config_struct
+                self.config = create_new_config(str(self.conf_root) + '/settings.ini')
 
             log.debug(f'Sections in config: {self.config.sections()}')
 

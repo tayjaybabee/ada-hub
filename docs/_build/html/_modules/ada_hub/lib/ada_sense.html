@@ -151,8 +151,8 @@
 <span></span><span class="kn">from</span> <span class="nn">ada_hub.lib.constants</span> <span class="kn">import</span> <span class="n">PROG</span>
 <span class="kn">from</span> <span class="nn">ada_hub.lib.helpers.system</span> <span class="kn">import</span> <span class="n">gui_capable</span>
 <span class="kn">from</span> <span class="nn">ada_hub.lib.helpers.debug</span> <span class="kn">import</span> <span class="n">format_members</span>
-<span class="kn">from</span> <span class="nn">ada_hub.lib.ada_sense.helpers.config</span> <span class="kn">import</span> <span class="n">add_new</span>
 <span class="kn">from</span> <span class="nn">ada_hub.lib.config</span> <span class="kn">import</span> <span class="n">write_config</span>
+<span class="kn">from</span> <span class="nn">ada_hub.lib.config.defaults</span> <span class="kn">import</span> <span class="n">sense_conf</span><span class="p">,</span> <span class="n">sense_device</span> <span class="k">as</span> <span class="n">sense_device_conf</span>
 
 <span class="c1"># Import exceptions</span>
 <span class="kn">from</span> <span class="nn">ada_hub.lib.ada_sense.errors</span> <span class="kn">import</span> <span class="n">InvalidTempScaleError</span>
@@ -160,7 +160,54 @@
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 
 
+<span class="n">VALID_TEMP_SCALES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;c&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;celsius&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fahrenheit&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;k&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+<span class="sd">&quot;&quot;&quot; The strings that will be accepted by the program as valid temp scales to check against when assigning/changing </span>
+<span class="sd">the respective option. &quot;&quot;&quot;</span>
+
+
 <div class="viewcode-block" id="AdaSense"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense">[docs]</a><span class="k">class</span> <span class="nc">AdaSense</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    A class that handles interaction between the APP and the Sense device.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="AdaSense.add_to_config"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.add_to_config">[docs]</a>    <span class="k">def</span> <span class="nf">add_to_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        A function that adds the SENSE and SENSE_DEVICE sections to the config file. Should be rare to use this as</span>
+<span class="sd">        the config class should have created these sections already.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ConfigParser object modified.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s1">.add_to_config&#39;</span><span class="p">)</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+        <span class="n">debug</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">debug</span>
+        <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Logger started for </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received call to add sections to config for AdaSense.&#39;</span><span class="p">)</span>
+
+        <span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Gathering the default SENSE section &amp; reading it into the config file&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">read_dict</span><span class="p">(</span><span class="n">sense_conf</span><span class="p">())</span>
+        <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Section, added. Config sections are now: </span><span class="si">{</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Gathering the SENSE_DEVICE section and reading it into the config file.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">read_dict</span><span class="p">(</span><span class="n">sense_device_conf</span><span class="p">())</span>
+        <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Section, added. Config sections are now: </span><span class="si">{</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Returning config device to caller&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span></div>
+
 
 <div class="viewcode-block" id="AdaSense.check_scale"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.check_scale">[docs]</a>    <span class="k">def</span> <span class="nf">check_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alt_scale</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -181,19 +228,36 @@
 
         <span class="k">if</span> <span class="n">alt_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received argument for alt_scale, checking that instead of current configuration&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">alt_scale</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_temp_scales</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">alt_scale</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_TEMP_SCALES</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">InvalidTempScaleError</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
 
         <span class="c1"># If the configured temperature unit is not found in the list of valid temperature scales raise an</span>
         <span class="c1"># InvalidTempScaleError exception, otherwise; just return True</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_temp_scales</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_TEMP_SCALES</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">InvalidTempScaleError</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span></div>
 
+
 <div class="viewcode-block" id="AdaSense.change_temp_scale"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.change_temp_scale">[docs]</a>    <span class="k">def</span> <span class="nf">change_temp_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_scale</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Change the scale that temperature results will be delivered in moving forward.</span>
+
+<span class="sd">        Call on this function to change the scale that temperature results are delivered in, going forward. Part of</span>
+<span class="sd">        the processes run by this function are to check the string provided by the `new_scale` parameter of this</span>
+<span class="sd">        function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_scale ():</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span> <span class="o">+</span> <span class="s1">&#39;.change_temp_scale&#39;</span><span class="p">)</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
 
@@ -206,7 +270,7 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">check_scale</span><span class="p">(</span><span class="n">new_scale</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;ADA_SENSE_SETTINGS&#39;</span><span class="p">][</span><span class="s1">&#39;temp_scale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_scale</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span> <span class="s1">&#39;SENSE&#39;</span> <span class="p">][</span> <span class="s1">&#39;temp_scale&#39;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">new_scale</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="o">=</span> <span class="n">new_scale</span>
             <span class="n">write_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">InvalidTempScaleError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -214,6 +278,16 @@
 
 
 <div class="viewcode-block" id="AdaSense.load_sense"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.load_sense">[docs]</a>    <span class="k">def</span> <span class="nf">load_sense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emulate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Load the Sense device interface</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            emulate (bool): Should the Sense emulator be loaded? True for yes, False for no (default)</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.load_sense&#39;</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received request to load AdaSense and it</span><span class="se">\&#39;</span><span class="s1">s drivers...&#39;</span><span class="p">)</span>
 
@@ -223,6 +297,7 @@
             <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Did not receive emulate flag, attempting to load live hardware...&#39;</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="kn">from</span> <span class="nn">sense_hat</span> <span class="kn">import</span> <span class="n">SenseHat</span>
+
                 <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;SenseHat loaded. Not Emulated.&#39;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ModuleNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Received exception while attempting to load the Sense hardware&#39;</span><span class="p">)</span>
@@ -235,6 +310,7 @@
                           <span class="s1">&#39;given such conditions.&#39;</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="kn">from</span> <span class="nn">sense_emu</span> <span class="kn">import</span> <span class="n">SenseHat</span>
+
                 <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;SenseHat loaded. Emulated.&#39;</span><span class="p">)</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;SenseHat Emulator Loaded. Performing test probe to ensure reliable emulator initialization &#39;</span>
                          <span class="s1">&#39;occurred.&#39;</span><span class="p">)</span>
@@ -252,8 +328,10 @@
                 <span class="k">raise</span>
 
             <span class="c1"># Since we&#39;ve now determined exactly which Sense Hat library we&#39;ll use; let&#39;s go ahead and initialize</span>
-            <span class="c1"># that class while we store</span>
+            <span class="c1"># that class while we store it in an attribute</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sense</span> <span class="o">=</span> <span class="n">SenseHat</span><span class="p">()</span></div>
+
+
 
 <div class="viewcode-block" id="AdaSense.get_humidity"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.get_humidity">[docs]</a>    <span class="k">def</span> <span class="nf">get_humidity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -272,8 +350,8 @@
 
         <span class="k">return</span> <span class="n">f_hum</span></div>
 
+
 <div class="viewcode-block" id="AdaSense.get_temp"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.get_temp">[docs]</a>    <span class="k">def</span> <span class="nf">get_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">ada_hub.lib.ada_sense.helpers.converters</span> <span class="kn">import</span> <span class="n">c_to_f</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Get the current ambient temperature according to the humidity sensor</span>
@@ -282,6 +360,7 @@
 <span class="sd">            float: The current temperature in celsius, rounded to two decimal places.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">ada_hub.lib.ada_sense.helpers.converters</span> <span class="kn">import</span> <span class="n">c_to_f</span>
 
         <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.AdaSense.get_temp&#39;</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Received request to fetch ambient temperature.&#39;</span><span class="p">)</span>
@@ -293,6 +372,7 @@
             <span class="n">temp</span> <span class="o">=</span> <span class="n">c_to_f</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">temp</span></div>
+
 
 <div class="viewcode-block" id="AdaSense.get_pressure"><a class="viewcode-back" href="../../../sources/ada_hub.lib.ada_sense.html#ada_hub.lib.ada_sense.AdaSense.get_pressure">[docs]</a>    <span class="k">def</span> <span class="nf">get_pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -328,9 +408,12 @@
         <span class="c1"># Return formatted and rounded result to the caller</span>
         <span class="k">return</span> <span class="n">pres</span></div>
 
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.AdaSense&#39;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot; str: The name of the logger for this class &quot;&quot;&quot;</span>
+
         <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Started logger for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
@@ -338,26 +421,15 @@
 
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Attempting to load configuration from the config object received.&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="sd">&quot;&quot;&quot; The config object as passed to this class. &quot;&quot;&quot;</span>
 
-        <span class="c1"># If we&#39;re not able to find the &#39;ADA_SENSE_SETTINGS&#39; section in the config file, we should go ahead and</span>
+        <span class="c1"># If we&#39;re not able to find the &#39;SENSE&#39; section in the config file, we should go ahead and</span>
         <span class="c1"># create one, add it, and fill it with defaults.</span>
-        <span class="k">if</span> <span class="s1">&#39;ADA_SENSE_SETTINGS&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">add_new</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-
+        <span class="k">if</span> <span class="s1">&#39;SENSE&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_to_config</span><span class="p">()</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Setting up attributes.&#39;</span><span class="p">)</span>
 
-        <span class="c1"># Declare some attributes with default values</span>
-
-        <span class="c1"># Declare an attribute containing a list of acceptable temperature reading scales. This will be useful to</span>
-        <span class="c1"># validate against later if/when we receive a request to read back ambient temperature</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">valid_temp_scales</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;c&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;celsius&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;f&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;fahrenheit&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;k&#39;</span><span class="p">,</span>
-            <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;ADA_SENSE_SETTINGS&#39;</span><span class="p">][</span><span class="s1">&#39;temp_scale&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temp_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span> <span class="s1">&#39;SENSE&#39;</span> <span class="p">][</span> <span class="s1">&#39;temp_scale&#39;</span> <span class="p">]</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">check_scale</span><span class="p">()</span>
@@ -368,6 +440,29 @@
 
         <span class="c1"># Define an attribute named &#39;sense&#39; with a value of None type. This is to be filled later</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sense</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot; An instance of SenseHat() </span>
+
+<span class="sd">                    This is either going to be one of two objects:</span>
+
+<span class="sd">                        :class:`sense_hat.SenseHat()`</span>
+<span class="sd">                            This will be returned when the program detects that it is connected to a Sense Hat and </span>
+<span class="sd">                            all the </span>
+<span class="sd">                            proper packages are installed. This will be the most often initialized class given that the </span>
+<span class="sd">                            application will most-often be used in a production environment.</span>
+
+<span class="sd">                        :class:`sense_emu.SenseHat()`</span>
+<span class="sd">                            If the program was explicitly instructed to (using the &#39;--emulate&#39; flag) or, </span>
+<span class="sd">                            if the program has had</span>
+<span class="sd">                            an issue connecting to/finding the actual Sense Hat hardware it will start Sense Emu </span>
+<span class="sd">                            which is </span>
+<span class="sd">                            SenseHat emulation software to assist in testing and development</span>
+
+<span class="sd">                    Note:</span>
+
+<span class="sd">                        You can ensure the emulator always/never starts by manipulating the respective option in the </span>
+<span class="sd">                        config file! </span>
+
+<span class="sd">                    &quot;&quot;&quot;</span>
 
         <span class="c1"># Let&#39;s go ahead and fill that attribute by running the &#39;load_sense&#39; function of this class</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load_sense</span><span class="p">()</span></div>

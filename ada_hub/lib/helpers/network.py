@@ -13,7 +13,6 @@ m_log_name = f'{PROG}.Helpers.Network'
 m_log = getLogger(m_log_name)
 m_log.debug(f'Imported and started logger for: {m_log_name}')
 
-
 def backup_test():
     """
 

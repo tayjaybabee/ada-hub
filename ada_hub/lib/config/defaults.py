@@ -230,10 +230,8 @@ def locale_conf():
     return content
 
 
-def create_new_config(args):
+def create_new_config(conf_file_path=None):
     """
-
-
 
     Args:
         args ():
@@ -260,5 +258,16 @@ def create_new_config(args):
 
     for section in sections:
         parser.read_dict(section)
+
+    def_conf_fp = str(parser['APP']['conf_file_path'] + '/settings.ini')
+
+    if conf_file_path is None:
+        conf_fp = str(def_conf_fp + '/settings.ini')
+    else:
+        conf_fp = conf_file_path
+
+    # Write the created ConfigParser object to disk.
+    with open(conf_fp, 'w') as fp:
+        parser.write(fp)
 
     return parser

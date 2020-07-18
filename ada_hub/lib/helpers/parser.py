@@ -23,18 +23,38 @@ def parse_args():
 
     verbosity_args.add_argument('-q', '--quiet', action='store_true',
                                 help='Instruct the logger to suppress all logger messages below WARNING level from '
-                                     'being '
-                                     'output to the console',
-                                required=False)
+                                     'being output to the console', required=False)
 
     verbosity_args.add_argument('-s', '--silent', action='store_true',
                                 help='Instruct the logger to suppress all logger messages from being output to the '
                                      'console unless they are describing a fatal exception.',
                                 required=False)
 
+    parser.add_argument('--address', type=str, action='store', default=None, required=False,
+                        help='')
+
+    parser.add_argument('--postal-code', '--postal', action='store', type=str, required=False, default=None)
+
     subparsers = parser.add_subparsers(title='Sub-Commands',
                                        dest='command',
                                        description='Valid sub-commands for ada-hub')
+
+    allto_parser = subparsers.add_parser('location-lookup',
+                                                 help="Tell AdaHub the location you expect it to be used at by looking "
+                                                      "up the address, postal code, or just city. As granular as you "
+                                                      "want - or don't want.")
+
+    sub_allto = allto_parser.add_subparsers(title='Interface mode', dest='loc_lookup_mode',
+                                                              description='Choose your interface for the AdaHub '
+                                                                          'Location Lookup Tool (ALLTO):\n'
+                                                                          '    - GUI\n'
+                                                                          '    -  CLI')
+
+    gui_allto = sub_allto.add_parser('GUI',
+                                     help='Start ALLTO in a graphical-user-interface.')
+
+    cli_allto = sub_allto.add_parser('CLI',
+                                     help='Start ALLTO in a command-line-interface.')
 
     # Create the 'credits' sub-command. This will be the command a user uses in order to see all the third-party
     # APIs, media, etc that are used in the operation of of the AdaHub application.
@@ -49,8 +69,6 @@ def parse_args():
                                    help='Clear the terminal before printing the credits')
 
     cli_subparser = subparsers.add_parser('cli', help='Run a quick query using the command line (no GUI)')
-
-    cli_subparser.add_argument('-l', '--location', type=int, action='store')
 
     # Create the 'GUI' sub-command. This will be the command a user uses to start the program in graphical mode.
     gui_subparser = subparsers.add_parser('gui', help='Start the program with the full GUI')
@@ -82,5 +100,8 @@ def parse_args():
                         help="Provide the filesystem-location of your application's configuration directory, "
                              "or the destination you want the program to create a configuration directory in.",
                         required=False)
+
+    parser.add_argument('--locate-by-ip', action='store_true', required=False, default=False,
+                        help="Look up the location of the device via it's IP Address")
 
     return parser

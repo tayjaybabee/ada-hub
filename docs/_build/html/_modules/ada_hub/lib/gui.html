@@ -162,7 +162,7 @@
     <span class="k">def</span> <span class="nf">merge_default_config</span><span class="p">(</span><span class="n">prog_conf</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">        Take a configuration structure and add the GUI_PREFS section to it, as well as some basic/default options.</span>
+<span class="sd">        Take a configuration structure and add the GUI section to it, as well as some basic/default options.</span>
 <span class="sd">        After setting the options the function will then return your modified configuration object.</span>
 
 <span class="sd">        Args:</span>
@@ -174,13 +174,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Add our section</span>
-        <span class="n">prog_conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">)</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s1">&#39;GUI&#39;</span><span class="p">)</span>
 
         <span class="c1"># Add our basic configuration structure</span>
-        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">,</span> <span class="s1">&#39;theme&#39;</span><span class="p">,</span> <span class="s1">&#39;DarkAmber&#39;</span><span class="p">)</span>
-        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">,</span> <span class="s1">&#39;icon_set&#39;</span><span class="p">,</span> <span class="s1">&#39;sketch&#39;</span><span class="p">)</span>
-        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">,</span> <span class="s1">&#39;grab_anywhere&#39;</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">)</span>
-        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">,</span> <span class="s1">&#39;advanced_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">)</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI&#39;</span><span class="p">,</span> <span class="s1">&#39;theme&#39;</span><span class="p">,</span> <span class="s1">&#39;DarkAmber&#39;</span><span class="p">)</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI&#39;</span><span class="p">,</span> <span class="s1">&#39;icon_set&#39;</span><span class="p">,</span> <span class="s1">&#39;sketch&#39;</span><span class="p">)</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI&#39;</span><span class="p">,</span> <span class="s1">&#39;grab_anywhere&#39;</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">)</span>
+        <span class="n">prog_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;GUI&#39;</span><span class="p">,</span> <span class="s1">&#39;advanced_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">)</span>
 
         <span class="c1"># Return the modified configuration object</span>
         <span class="k">return</span> <span class="n">prog_conf</span></div>
@@ -196,19 +196,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Grab the configuration file&#39;s path from the provided configuration object.</span>
-        <span class="n">conf_filepath</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;RUNTIME&#39;</span><span class="p">][</span><span class="s1">&#39;conf_file_path&#39;</span><span class="p">]</span>
+        <span class="n">conf_filepath</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;APP&#39;</span><span class="p">][</span><span class="s1">&#39;conf_file_path&#39;</span><span class="p">]</span>
 
         <span class="c1"># Start a logger with an appropriate, descriptive name</span>
         <span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.GUIConfig&#39;</span><span class="p">)</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
 
-        <span class="n">section</span> <span class="o">=</span> <span class="s1">&#39;GUI_PREFS&#39;</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="s1">&#39;GUI&#39;</span>
 
-        <span class="c1"># Analyze the configuration object&#39;s sections to see if &#39;GUI_PREFS&#39; is among them. If it&#39;s not,</span>
+        <span class="c1"># Analyze the configuration object&#39;s sections to see if &#39;GUI&#39; is among them. If it&#39;s not,</span>
         <span class="c1"># we will send our configuration object off to &quot;merge_default_config&quot; to be modified appropriately.</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Looking for &quot;GUI_PREFS&quot; section in configuration&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Looking for &quot;GUI&quot; section in configuration&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">section</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;The configuration does not contain a &quot;GUI_PREFS&quot; section. Creating!&#39;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;The configuration does not contain a &quot;GUI&quot; section. Creating!&#39;</span><span class="p">)</span>
             <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_default_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
             <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received the modified configuration object. With these sections: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Writing modified configuration to disk.&#39;</span><span class="p">)</span>
@@ -218,7 +218,7 @@
         <span class="c1"># Go ahead and assign the config to an aptly named attribute</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="n">config</span>
 
-        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initialized GUI config in the following state: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">[</span><span class="s2">&quot;GUI_PREFS&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initialized GUI config in the following state: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">[</span><span class="s2">&quot;GUI&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="GUIApp"><a class="viewcode-back" href="../../../sources/ada_hub.lib.gui.html#ada_hub.lib.gui.GUIApp">[docs]</a><span class="k">class</span> <span class="nc">GUIApp</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -246,8 +246,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span> <span class="o">=</span> <span class="n">main_win</span><span class="o">.</span><span class="n">window</span>
 
         <span class="c1"># Extract the theme indicated by the configuration to an aptly named attribute</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">theme</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">][</span><span class="s1">&#39;theme&#39;</span><span class="p">]</span>
-        <span class="n">icon_set_str</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GUI_PREFS&#39;</span><span class="p">][</span><span class="s1">&#39;icon_set&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GUI&#39;</span><span class="p">][</span><span class="s1">&#39;theme&#39;</span><span class="p">]</span>
+        <span class="n">icon_set_str</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GUI&#39;</span><span class="p">][</span><span class="s1">&#39;icon_set&#39;</span><span class="p">]</span>
 
         <span class="c1"># Set up a flag that will be used to indicate the running status of this window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">main_active</span> <span class="o">=</span> <span class="n">main_win</span><span class="o">.</span><span class="n">win_active</span>

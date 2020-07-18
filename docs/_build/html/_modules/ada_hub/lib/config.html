@@ -186,6 +186,7 @@
 
 <div class="viewcode-block" id="AdaHubConfig"><a class="viewcode-back" href="../../../sources/ada_hub.lib.config.html#ada_hub.lib.config.AdaHubConfig">[docs]</a><span class="k">class</span> <span class="nc">AdaHubConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
+
 <div class="viewcode-block" id="AdaHubConfig.read_from_disk"><a class="viewcode-back" href="../../../sources/ada_hub.lib.config.html#ada_hub.lib.config.AdaHubConfig.read_from_disk">[docs]</a>    <span class="k">def</span> <span class="nf">read_from_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
@@ -204,13 +205,13 @@
 
         <span class="c1"># For verbose output, announce ourselves and why we&#39;re operating.</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Logger started for </span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received call to read config file from disk: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received call to read config file from disk: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_file_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="c1"># Initialize a new ConfigParser object for us to load the config file that we read into.</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
 
         <span class="c1"># Use the ConfigParser object to read the settings file, and parse it appropriately.</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_path</span><span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_file_path</span><span class="p">)</span>
 
         <span class="c1"># For debugging purposes we will announce the sections we found within the config file.</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found config file with these sections: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -225,16 +226,18 @@
         <span class="c1"># From * standard library imports</span>
         <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROG</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">data_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">conf_dir</span> <span class="o">=</span> <span class="n">DEFAULT_CONF_ROOT</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">conf_dir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/conf&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">config_filepath</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_dir</span> <span class="o">+</span> <span class="s1">&#39;/settings.ini&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf_file_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_dir</span> <span class="o">+</span> <span class="s1">&#39;/settings.ini&#39;</span><span class="p">)</span>
 
         <span class="n">conf_dir_exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_dir</span><span class="p">))</span>
         <span class="n">conf_file_exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_file_path</span><span class="p">))</span>
-        <span class="n">conf_file_isfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_path</span><span class="p">))</span>
+        <span class="n">conf_file_isfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_file_path</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">conf_dir_exists</span> <span class="ow">and</span> <span class="n">conf_file_exists</span> <span class="ow">and</span> <span class="n">conf_file_isfile</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_from_disk</span><span class="p">()</span>
@@ -267,27 +270,24 @@
             <span class="n">config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_conf_file_path</span><span class="p">)</span>
 
         <span class="c1"># Finally, set this path as an attribute of the AdaHubConfig class</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config_file_path</span> <span class="o">=</span> <span class="n">config_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf_file_path</span> <span class="o">=</span> <span class="n">config_path</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">conf_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_file_path</span><span class="o">.</span><span class="n">parent</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf_file_path</span><span class="o">.</span><span class="n">parent</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_root</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Config root not present on system </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_root</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_root</span><span class="p">))</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Directory written!&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_file_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Found config file&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_from_disk</span><span class="p">()</span>
 
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Did not find specified config file. Creating...&#39;</span><span class="p">)</span>
-                <span class="n">config_struct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_default</span><span class="p">()</span>
-                <span class="n">write_config</span><span class="p">(</span><span class="n">config_struct</span><span class="p">,</span> <span class="n">config_struct</span><span class="p">[</span><span class="s1">&#39;RUNTIME&#39;</span><span class="p">][</span><span class="s1">&#39;conf_file_path&#39;</span><span class="p">])</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_struct</span><span class="p">[</span><span class="s1">&#39;RUNTIME&#39;</span><span class="p">][</span><span class="s1">&#39;conf_file_path&#39;</span><span class="p">],</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-                    <span class="n">config_struct</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
-                    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Written&#39;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config_struct</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">create_new_config</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_root</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/settings.ini&#39;</span><span class="p">)</span>
 
             <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Sections in config: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
